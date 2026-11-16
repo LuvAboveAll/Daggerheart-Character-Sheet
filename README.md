@@ -22,4 +22,4 @@
 <li>This was code assisted by Copilot and Gemini but does not use AI</li>
 <h3>Other</h3>
 <p>This is a digital character sheet. Version 1 does not include any automations. This will be the plan for V2. I will work on getting the rest of the SRD included. This doesn't autosave. To Save and Load json configs, Use the buttons in Admin section of the Menu. Feel free to download and use offline.</p>
-<p>Here is the <a href="https://luvaboveall.github.io/Daggerheart-Character-Sheet/DHCSv1.0.27.html">character sheet</a></p>
+<p>Here is the <a href="https://luvaboveall.github.io/Daggerheart-Character-Sheet/DHCS.html">character sheet</a></p>
