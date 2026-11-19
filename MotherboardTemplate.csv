@@ -1,0 +1,42 @@
+Tier,Name,Type,Use,dmgType,Trait,Range,Damage,Damage Mod,Burden,baseMajor,baseSevere,baseScore,Feature,,,,,,,,,,,,,
+0,Ikonis,Weapon,Primary,,,,,,Two-Handed,,,,"Gain a bonus to your damage rolls equal to your level. +1 damage 3 gears, 2 lenses, 4 aluminum, 1 capacitor",,,,,,,,,,,,,
+1,Augment: Force,Weapon,Primary,,,,,,Two-Handed,,,,"+1 damage 3 gears, 2 lenses, 4 aluminum, 1 capacitor'",,,,,,,,,,,,,
+1,Augment: Force 2,Weapon,Primary,,,,,,Two-Handed,,,,"+1 damage 3 gears, 2 lenses, 4 aluminum, 1 capacitor'",,,,,,,,,,,,,
+1,Augment: Guard,Weapon,Primary,,,,,,Two-Handed,,,,"+1 Armor Score 3 , 2 silver, 2 platinum, 3 fuses'",,,,,,,,,,,,,
+1,Augment: Guard 2,Weapon,Primary,,,,,,Two-Handed,,,,"+1 Armor Score 3 , 2 silver, 2 platinum, 3 fuses'",,,,,,,,,,,,,
+1,Augment: Converge,Weapon,Primary,,,,,,Two-Handed,,,,"+1 to attack rolls 4 coils, 2 crystals, 5 gold, 3 discs'",,,,,,,,,,,,,
+1,Augment: Converge 2,Weapon,Primary,,,,,,Two-Handed,,,,"+1 to attack rolls 4 coils, 2 crystals, 5 gold, 3 discs'",,,,,,,,,,,,,
+1,Augment: Amplify,Weapon,Primary,,,,,,Two-Handed,,,,"On a successful attack, roll an additional damage die and drop the lowest result. 
+4 crystals, 4 cobalt, 4 copper, 4 capacitors'",,,,,,,,,,,,,
+1,Augment: Scope,Weapon,Primary,,,,,,Two-Handed,,,,"Increase range by one step (Melee to Very Close, Close to Far, etc.). 
+5 lenses, 3 silver, 2 circuits, 2 relays'",,,,,,,,,,,,,
+1,Augment: Scope 2,Weapon,Primary,,,,,,Two-Handed,,,,"Increase range by one step (Melee to Very Close, Close to Far, etc.). 
+5 lenses, 3 silver, 2 circuits, 2 relays'",,,,,,,,,,,,,
+1,Augment: Deny,Weapon,Primary,,,,,,Two-Handed,,,,"+2 Armor Score 6 coils, 3 wire, 2 copper, 4 batteries'",,,,,,,,,,,,,
+1,Augment: Target,Weapon,Primary,,,,,,Two-Handed,,,,"+2 to attack rolls 10 wires, 7 gold, 5 fuses, 5 circuits, 2 batteries'",,,,,,,,,,,,,
+1,Augment: Split,Weapon,Primary,,,,,,Two-Handed,,,,"When you make an attack, mark a Stress to target another creature within range. 
+12 gears, 5 lenses, 15 aluminum, 9 relays'",,,,,,,,,,,,,
+1,Augment: Fix,Weapon,Primary,,,,,,Two-Handed,,,,"When you deal Severe damage, clear a Hit Point. 
+6 coils, 4 wires, 1 crystal, 5 cobalt, 5 silver, 7 relays, 2 batteries'",,,,,,,,,,,,,
+1,Augment: Fix 2,Weapon,Primary,,,,,,Two-Handed,,,,"When you deal Severe damage, clear a Hit Point. 
+6 coils, 4 wires, 1 crystal, 5 cobalt, 5 silver, 7 relays, 2 batteries'",,,,,,,,,,,,,
+1,Augment: Scare,Weapon,Primary,,,,,,Two-Handed,,,,"When you critically succeed on an attack, the target must mark a Stress. 
+6 triggers, 8 copper, 9 aluminum, 10 discs'",,,,,,,,,,,,,
+1,Augment: Scare 2,Weapon,Primary,,,,,,Two-Handed,,,,"When you critically succeed on an attack, the target must mark a Stress. 
+6 triggers, 8 copper, 9 aluminum, 10 discs'",,,,,,,,,,,,,
+2,Augment: Sear,Weapon,Primary,,,,,,Two-Handed,,,,"+2 damage 11 triggers, 11 platinum, 11 circuits, 7 discs'",,,,,,,,,,,,,"+2 damage 11 triggers, 11 platinum, 11 circuits, 7 discs'"
+2,Augment: Sear 2,Weapon,Primary,,,,,,Two-Handed,,,,"+2 damage 11 triggers, 11 platinum, 11 circuits, 7 discs'",,,,,,,,,,,,,
+2,Augment: Absorb,Weapon,Primary,,,,,,Two-Handed,,,,"You can mark an additional Armor Slot against incoming damage. 
+26 gears, 13 gold, 15 relays, 8 batteries'",,,,,,,,,,,,,
+2,Augment: Kick,Weapon,Primary,,,,,,Two-Handed,,,,"On a successful attack, you can mark 2 Stress to force the target to mark an additional Hit Point. 
+33 triggers, 13 crystals, 23 cobalt, 16 discs'",,,,,,,,,,,,,
+3,Augment: Block,Weapon,Primary,,,,,,Two-Handed,,,,"+3 Armor Score; −1 Evasion 27 crystals, 67 aluminum, 33 relays, 4 capacitors, 5 batteries'",,,,,,,,,,,,,
+3,Augment: Zip,Weapon,Primary,,,,,,Two-Handed,,,,"Move up to Far range as part of an attack. 
+37 coils, 43 silver, 67 fuses, 12 capacitors'",,,,,,,,,,,,,
+3,Augment: Bury,Weapon,Primary,,,,,,Two-Handed,,,,"+3 damage 28 triggers, 28 circuits, 28 relays, 1 relic'",,,,,,,,,,,,,
+3,Augment: Bury 2,Weapon,Primary,,,,,,Two-Handed,,,,"+3 damage 28 triggers, 28 circuits, 28 relays, 1 relic'",,,,,,,,,,,,,
+3,Augment: Bury 3,Weapon,Primary,,,,,,Two-Handed,,,,"+3 damage 28 triggers, 28 circuits, 28 relays, 1 relic'",,,,,,,,,,,,,
+4,Augment: Follow,Weapon,Primary,,,,,,Two-Handed,,,,"Mark 2 Stress to reroll your attack. 
+75 gears, 67 lenses, 30 copper, 33 circuits'",,,,,,,,,,,,,
+4,Augment: Override,Weapon,Primary,,,,,,Two-Handed,,,,"Attack rolls have advantage. 
+63 wires, 71 gold, 58 discs, 5 relics'",,,,,,,,,,,,,
