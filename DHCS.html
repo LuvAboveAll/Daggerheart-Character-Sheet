@@ -2164,132 +2164,6 @@ function renderMulticlassUI() {
   updateFeaturesDisplay();
 }
 
-/*function renderSpecialSubclassUI(subclassName) {
-  const container = document.getElementById('container-subclass-feature');
-  const content = document.getElementById('subclass-dynamic-content');
-  const resourceContainer = document.getElementById('container-class-resource');
-  const resourceLabel = document.getElementById('label-class-resource');
-
-  if (subclassName === "Brawler - Martial Artist") {
-    resourceContainer.style.display = 'block';
-    resourceLabel.textContent = "Focus";
-  } else if (subclassName === "Seraph - Divine Wielder" || subclassName === "Seraph - Winged Sentinel") {
-    resourceContainer.style.display = 'block';
-    resourceLabel.textContent = "Prayers";
-  } else {
-    resourceContainer.style.display = 'none';
-  }
-
-  if (subclassName === "Brawler - Martial Artist") {
-    container.style.display = 'block';
-    let opts = MARTIAL_ARTIST_DATA.map((m, idx) => `<option value="${idx}">[${m.tier}] ${m.name}</option>`).join('');
-    content.innerHTML = `
-      <label style="color:#f6ad55;">Martial Artist Feature Stances</label>
-      <select id="select-martial-artist-feature" onchange="updateMartialArtistDesc()" class="mb-1">${opts}</select>
-      <textarea id="martial-artist-desc" readonly style="font-size:0.75rem; height:50px; background:rgba(0,0,0,0.3); resize:none;"></textarea>
-    `;
-    updateMartialArtistDesc();
-  } else if (subclassName === "Druid - Warden of the Elements" || subclassName === "Druid - Warden of Renewal") {
-    container.style.display = 'block';
-    let opts = BEASTFORM_DATA.map((b, idx) => `<option value="${idx}">[${b.tier}] ${b.name}</option>`).join('');
-    content.innerHTML = `
-      <label style="color:#f6ad55;">Druid Beastform Options</label>
-      <select id="select-druid-beast" onchange="updateDruidBeastDesc()" class="mb-1">${opts}</select>
-      <textarea id="druid-beast-desc" readonly style="font-size:0.75rem; height:50px; background:rgba(0,0,0,0.3); resize:none;"></textarea>
-    `;
-    updateDruidBeastDesc();
-	} else if (subclassName === "Ranger - Beastbound") {
-    container.style.display = 'block';
-    content.innerHTML = `
-      <label style="color:#f6ad55;" title="create an equipment and experience for your companion">🐺 Companion Setup (Hover for tip)</label>
-      <div class="grid-2">
-        <div><label>Name</label><input type="text" id="companion-name" placeholder="Companion Name"></div>
-        <div><label>Evasion</label><input type="number" id="companion-evasion" value="10"></div>
-      </div>
-    `;
-	  } else {
-		container.style.display = 'none';
-		content.innerHTML = '';
-  }
-}
-
-function updateMartialArtistDesc() {
-  const idx = document.getElementById('select-martial-artist-feature').value;
-  document.getElementById('martial-artist-desc').value = MARTIAL_ARTIST_DATA[idx].desc;
-}
-
-function updateDruidBeastDesc() {
-  const idx = document.getElementById('select-druid-beast').value;
-  document.getElementById('druid-beast-desc').value = BEASTFORM_DATA[idx].desc;
-}
-
-function updateFeaturesDisplay() {
-  const subIdx = document.getElementById('select-subclass').value;
-  const sc = SUBCLASSES_DATA[subIdx];
-  const displayBox = document.getElementById('unified-feature-display');
-  
-  renderSpecialSubclassUI(`${sc.class} - ${sc.subclass}`);
-
-  let html = `<div class="feature-item">
-    <span class="feature-title">Primary Class (${sc.class} - ${sc.subclass}):</span><br>
-    <span>${sc.feature}</span>
-  </div>`;
-
-  const isMulti = document.getElementById('toggle-multiclass').checked;
-  if (isMulti) {
-    const multiIdx = document.getElementById('select-multiclass-subclass').value;
-    const multiSc = SUBCLASSES_DATA[multiIdx];
-    if (multiSc) {
-      html += `<div class="feature-item">
-        <span class="feature-title" style="color:#63b3ed;">Multiclass (${multiSc.class} - ${multiSc.subclass}):</span><br>
-        <span>Gain Domains: ${multiSc.domains.join(', ')} | Feature: ${multiSc.feature}</span>
-      </div>`;
-    }
-  }
-
-  const isMixed = document.getElementById('toggle-mixed-heritage').checked;
-  if (!isMixed) {
-    const anc = ANCESTRIES_DATA.find(a => a.name === document.getElementById('select-ancestry').value);
-    if (anc) {
-      html += `<div class="feature-item">
-        <span class="feature-title">Ancestry (${anc.name}):</span><br>
-        <span>• ${anc.f1}</span><br><span>• ${anc.f2}</span>
-      </div>`;
-    }
-  } else {
-    const anc1 = ANCESTRIES_DATA.find(a => a.name === document.getElementById('select-ancestry-1').value);
-    const anc2 = ANCESTRIES_DATA.find(a => a.name === document.getElementById('select-ancestry-2').value);
-    if (anc1 && anc2) {
-      html += `<div class="feature-item">
-        <span class="feature-title">Mixed Ancestry (${anc1.name} / ${anc2.name}):</span><br>
-        <span>• [${anc1.name} F1]: ${anc1.f1}</span><br>
-        <span>• [${anc2.name} F2]: ${anc2.f2}</span>
-      </div>`;
-    }
-  }
-
-  const comm = COMMUNITIES_DATA.find(c => c.name === document.getElementById('select-community').value);
-  if (comm) {
-    html += `<div class="feature-item">
-      <span class="feature-title">Community (${comm.name}):</span><br>
-      <span>${comm.feature}</span>
-    </div>`;
-  }
-
-  const isTrans = document.getElementById('toggle-transformations').checked;
-  if (isTrans) {
-    const trans = TRANSFORMATIONS_DATA.find(t => t.name === document.getElementById('select-transformation').value);
-    if (trans) {
-      html += `<div class="feature-item">
-        <span class="feature-title">Transformation (${trans.name}):</span><br>
-        <span>${trans.feature}</span>
-      </div>`;
-    }
-  }
-
-  displayBox.innerHTML = html;
-}
-*/
 function onLevelOrClassChange() {
   const lvl = parseInt(document.getElementById('char-level').value);
   const sc = SUBCLASSES_DATA[document.getElementById('select-subclass').value];
@@ -2753,84 +2627,6 @@ let currentEquipment = null;
     equipSelect.addEventListener('change', updateEquipmentVisibility);
   }
 
-/*	const origRenderSpecialSubclassUI = window.renderSpecialSubclassUI;
-  window.renderSpecialSubclassUI = function(subclassName) {
-    const multiSelect = document.getElementById('select-multiclass-subclass');
-    const multiSubclassName = multiSelect && multiSelect.options[multiSelect.selectedIndex] ? multiSelect.options[multiSelect.selectedIndex].text : '';
-
-    if (multiSubclassName === "Brawler - Martial Artist" || subclassName === "Brawler - Martial Artist") {
-      subclassName = "Brawler - Martial Artist";
-    } else if (multiSubclassName === "Druid - Warden of the Elements" || multiSubclassName === "Druid - Warden of Renewal" || subclassName === "Druid - Warden of the Elements" || subclassName === "Druid - Warden of Renewal") {
-      subclassName = multiSubclassName.includes("Druid") ? multiSubclassName : subclassName;
-    } else if (multiSubclassName === "Ranger - Beastbound" || subclassName === "Ranger - Beastbound") {
-      subclassName = "Ranger - Beastbound";
-    } else if (multiSubclassName.includes("Seraph") || subclassName.includes("Seraph")) {
-      subclassName = multiSubclassName.includes("Seraph") ? multiSubclassName : subclassName;
-    }
-
-    const container = document.getElementById('container-subclass-feature');
-    const content = document.getElementById('subclass-dynamic-content');
-    const resourceContainer = document.getElementById('container-class-resource');
-    const resourceLabel = document.getElementById('label-class-resource');
-
-    if (subclassName === "Brawler - Martial Artist") {
-      if (resourceContainer) resourceContainer.style.display = 'block';
-      if (resourceLabel) resourceLabel.textContent = "Focus";
-    } else if (subclassName === "Seraph - Divine Wielder" || subclassName === "Seraph - Winged Sentinel") {
-      if (resourceContainer) resourceContainer.style.display = 'block';
-      if (resourceLabel) resourceLabel.textContent = "Prayers";
-    } else {
-      if (resourceContainer) resourceContainer.style.display = 'none';
-    }
-
-    if (subclassName === "Brawler - Martial Artist") {
-      if (container) container.style.display = 'block'; -->
-    let opts = MARTIAL_ARTIST_DATA.map((m, idx) => `<option value="${idx}">[${m.tier}] ${m.name}</option>`).join('');
-      if (content) {
-        content.innerHTML = `
-          <label style="color:#f6ad55;">Martial Artist Feature Stances</label>
-          <select id="select-martial-artist-feature" onchange="updateMartialArtistDesc()" class="mb-1">${opts}</select>
-          <textarea id="martial-artist-desc" readonly style="font-size:0.75rem; height:50px; background:rgba(0,0,0,0.3); resize:none;"></textarea>
-        `;
-      }
-      updateMartialArtistDesc();
-    } else if (subclassName === "Druid - Warden of the Elements" || subclassName === "Druid - Warden of Renewal") {
-      if (container) container.style.display = 'block';
-      let opts = BEASTFORM_DATA.map((b, idx) => `<option value="${idx}">[${b.tier}] ${b.name}</option>`).join('');
-      if (content) {
-        content.innerHTML = `
-          <label style="color:#f6ad55;">Druid Beastform Options</label>
-          <select id="select-druid-beast" onchange="updateDruidBeastDesc()" class="mb-1">${opts}</select>
-          <textarea id="druid-beast-desc" readonly style="font-size:0.75rem; height:50px; background:rgba(0,0,0,0.3); resize:none;"></textarea>
-        `;
-      }
-      updateDruidBeastDesc();
-    } else if (subclassName === "Ranger - Beastbound") {
-      if (container) container.style.display = 'block';
-      if (content) {
-        content.innerHTML = `
-          <label style="color:#f6ad55;" title="create an equipment and experience for your companion">🐺 Companion Setup (Hover for tip)</label>
-          <div style="display:flex; flex-direction:column; gap:6px;">
-            <div><label>Name</label><input type="text" id="companion-name" placeholder="Companion Name"></div>
-            <div><label>Description</label><textarea id="companion-desc" placeholder="Companion description..." style="font-size:0.75rem; height:45px; background:rgba(0,0,0,0.3); resize:none;"></textarea></div>
-            <div class="stat-box">
-              <label>Stress</label>
-              <div style="display:flex; justify-content:center; align-items:center; gap:2px;">
-                <input type="number" id="companion-stress-current" value="0" onchange="renderCompanionStressTally()" style="width:35px; padding:1px;"> /
-                <input type="number" id="companion-stress-max" value="6" onchange="renderCompanionStressTally()" style="width:35px; padding:1px;">
-              </div>
-              <div class="tally-container" id="tally-companion-stress"></div>
-            </div>
-          </div>
-        `;
-      }
-      renderCompanionStressTally();
-    } else {
-      if (container) container.style.display = 'none';
-      if (content) content.innerHTML = '';
-    }
-  }; 
-*/  
   window.renderCompanionStressTally = function() {
     const cur = parseInt(document.getElementById('companion-stress-current')?.value) || 0;
     const max = parseInt(document.getElementById('companion-stress-max')?.value) || 6;
@@ -2852,18 +2648,6 @@ let currentEquipment = null;
     }
   };
 
-/*  const origOpenAddWeaponModal = window.openAddWeaponModal;
-  window.openAddWeaponModal = function() {
-    if (origOpenAddWeaponModal) origOpenAddWeaponModal();
-    updateEquipmentVisibility();
-  };
-
- const origOpenEditWeaponModal = window.openEditWeaponModal;
-  window.openEditWeaponModal = function(index) {
-    if (origOpenEditWeaponModal) origOpenEditWeaponModal(index);
-    updateEquipmentVisibility();
-  };
-*/
   const origSaveSheetJSON = window.saveSheetJSON;
   window.saveSheetJSON = function() {
     const data = {
@@ -3008,8 +2792,6 @@ function classResourceHTML(item,prefix){const name=fullSubclassName(item);if(nam
 function initClassFeatureWidgets(prefix,item){const n=fullSubclassName(item);if(n==='Brawler - Martial Artist')updateTieredFeatureDesc(prefix,'martial');if(n==='Druid - Warden of the Elements'||n==='Druid - Warden of Renewal')updateTieredFeatureDesc(prefix,'beast');document.querySelectorAll(`[id^="${prefix}-"][id$="-markers"]`).forEach(x=>{const p=x.id.replace(/-markers$/,'');let emoji='🔹';if(p.includes('beastbound'))emoji='🐺';else if(p.includes('focus'))emoji='👊';else if(p.includes('prayer'))emoji='🙏';else if(p.includes('unstoppable'))emoji='💪';else if(p.includes('favors'))emoji='🔗';renderEmojiTally(p,emoji)})}
 function renderPrimaryClassFeature(){const box=document.getElementById('container-subclass-feature'),content=document.getElementById('subclass-dynamic-content'),item=selectedSubclassRecord('select-subclass');if(!box||!content)return;box.style.display=item?'block':'none';if(!item){content.innerHTML='';return}content.innerHTML=`<div class="feature-item"><span class="feature-title">${fullSubclassName(item)}</span><div>${item.feature||''}</div></div>${classResourceHTML(item,'primary')}`;initClassFeatureWidgets('primary',item)}
 function renderMulticlassClassFeature(){const box=document.getElementById('container-subclass-feature-secondary'),content=document.getElementById('subclass-dynamic-content-secondary'),enabled=document.getElementById('toggle-multiclass')?.checked,item=enabled?selectedSubclassRecord('select-multiclass-subclass'):null;if(!box||!content)return;box.style.display=item?'block':'none';if(!item){content.innerHTML='';return}content.innerHTML=`<div class="feature-item"><span class="feature-title">${fullSubclassName(item)}</span><div>${item.feature||''}</div></div>${classResourceHTML(item,'multiclass')}`;initClassFeatureWidgets('multiclass',item)}
-function cleanAutobiography(){const box=document.getElementById('active-features-display');if(!box)return;let html=box.innerHTML;html=html.replace(/<span class="feature-title">Primary Class[^<]*<\/span><br>/gi,'').replace(/<span class="feature-title">Class Feature[^<]*<\/span><br>/gi,'');box.innerHTML=html}
-const _updateFeaturesV22=updateFeaturesDisplay;updateFeaturesDisplay=function(){_updateFeaturesV22();cleanAutobiography()};setTimeout(cleanAutobiography,0);
 
 /* v1.0.23 search persistence and complete save/load */
 function captureSearchState(containerId){return [...document.querySelectorAll(`${containerId} .search-picker`)].map(p=>({selected:p.dataset.selected||'',tier:p.dataset.tier||'',open:p.querySelector('details')?.open||false,query:p.querySelector('input[type="search"]')?.value||'',filters:[...p.querySelectorAll('.search-filter-grid select')].map(x=>x.value)}))}
@@ -3021,21 +2803,7 @@ function preserveDomainSearchButtons(){document.querySelectorAll('#domain-cards-
 const _renderDomainCardsV23=renderDomainCards;renderDomainCards=function(){const st=captureSearchState('#domain-cards-list');_renderDomainCardsV23();if(st.length)restoreSearchState('#domain-cards-list',st);preserveDomainSearchButtons()};setTimeout(preserveDomainSearchButtons,0);
 function collectCompleteSheetState(){const fields={};document.querySelectorAll('input[id],select[id],textarea[id]').forEach(el=>{if(el.type==='file')return;fields[el.id]=el.type==='checkbox'?el.checked:el.value});return{version:'1.0.23',savedAt:new Date().toISOString(),fields,equipmentSlots:structuredClone(equipmentSlots),experienceSlots:structuredClone(experienceSlots),inventorySlots:structuredClone(inventorySlots),domainSlots:structuredClone(domainSlots),weaponsDatabase:structuredClone(WEAPONS_DATABASE),domainCardsDatabase:structuredClone(DOMAIN_CARDS_DATABASE),theme:{bodyClass:document.body.className,rootStyle:document.documentElement.getAttribute('style')||'',bodyStyle:document.body.getAttribute('style')||'',cssVars:Object.fromEntries([...document.documentElement.style].filter(k=>k.startsWith('--')).map(k=>[k,document.documentElement.style.getPropertyValue(k)]))}}}
 window.saveSheetJSON=function(){const d=collectCompleteSheetState(),b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=`${d.fields['char-name']||'character'}_DHCS_v1.0.23.json`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
-window.loadSheetJSON=function(event){
- const file=event.target.files[0];if(!file)return;const reader=new FileReader();
- reader.onload=loadEvent=>{try{const saved=JSON.parse(loadEvent.target.result),data=saved.data||saved,fields=saved.fields||saved.form||{};
- if(data.weapons||saved.WEAPONS_DATABASE)WEAPONS_DATABASE=data.weapons||saved.WEAPONS_DATABASE;if(data.domains||saved.DOMAIN_CARDS_DATABASE)DOMAIN_CARDS_DATABASE=data.domains||saved.DOMAIN_CARDS_DATABASE;if(data.equipmentSlots)equipmentSlots=data.equipmentSlots;if(data.experienceSlots)experienceSlots=data.experienceSlots;if(data.inventorySlots)inventorySlots=data.inventorySlots;if(data.activeDomainCards)activeDomainCards=data.activeDomainCards;if(data.domainCardStates)domainCardStates=data.domainCardStates;if(data.domainPickerState26){domainPickerState26.length=0;domainPickerState26.push(...data.domainPickerState26)}if(data.levelState)window.DHCS_LEVEL_STATE=data.levelState;
- applyFields27(fields);for(const id of ['toggle-mixed-heritage','toggle-transformations','toggle-multiclass']){const rec=fields[id],el=document.getElementById(id);if(el&&rec)el.checked=!!rec.value}
- renderHeritageUI();renderTransformationUI();renderMulticlassUI();applyFields27(fields);
- renderPrimaryClassFeature();renderMulticlassClassFeature();updateFeaturesDisplay();
- document.querySelectorAll('.stat-box.marked').forEach(el=>el.classList.remove('marked'));(data.markedTraits||saved.marked||[]).forEach(id=>document.getElementById(id)?.classList.add('marked'));
- requestAnimationFrame(()=>{Object.entries(data.classFeatureResources||{}).forEach(([containerId,state])=>{const container=document.getElementById(containerId);if(!container)return;Object.entries(state.values||{}).forEach(([id,record])=>{const el=document.getElementById(id);if(!el||!container.contains(el))return;if(record.kind==='checked')el.checked=!!record.value;else el.value=record.value??'';el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}))});requestAnimationFrame(()=>{(state.activeMarkers||[]).forEach(marker=>{const parent=document.getElementById(marker.parentId),button=parent?.children?.[marker.index];if(parent&&container.contains(parent)&&button)button.classList.add('active')})})})});
- if(saved.appearance?.layout)changeLayout(saved.appearance.layout);if(saved.appearance?.logoTheme)toggleLogoTheme(saved.appearance.logoTheme);if(saved.notes!==undefined&&document.getElementById('character-notes-text'))document.getElementById('character-notes-text').value=saved.notes;
- renderEquipmentSlots();renderExperienceSlots();renderInventorySlots();renderDomainCards();renderSymbolTallies();if(window.renderCompanionStressTally)renderCompanionStressTally();alert('Character sheet loaded successfully!')
- }catch(error){console.error(error);alert('Load Sheet failed: '+error.message)}event.target.value=''};reader.readAsText(file)
-};
 </script>
-
 
 <style>
 /* v1.0.26 independent equipment/domain pickers */
@@ -3132,22 +2900,6 @@ function serializeAll27(){
 window.saveSheetJSON=function(){try{const state=serializeAll27(),blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=((document.getElementById('char-name')?.value||'character').replace(/[^a-z0-9_-]+/gi,'_'))+'_DHCS.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}catch(err){console.error(err);alert('Save Sheet failed: '+err.message)}};
 function applyFields27(fields){Object.entries(fields||{}).forEach(([id,rec])=>{const el=document.getElementById(id);if(!el)return;if(rec.kind==='open')el.open=!!rec.value;else if(rec.kind==='checked')el.checked=!!rec.value;else el.value=rec.value??''})}
 window.loadSheetJSON=function(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=evt=>{try{const s=JSON.parse(evt.target.result),d=s.data||{};if(d.weapons||d.databases?.weapons)WEAPONS_DATABASE=d.weapons||d.databases.weapons;if(d.domains||d.databases?.domains)DOMAIN_CARDS_DATABASE=d.domains||d.databases.domains;if(d.equipmentSlots)equipmentSlots=d.equipmentSlots;if(d.experienceSlots)experienceSlots=d.experienceSlots;if(d.inventorySlots)inventorySlots=d.inventorySlots;if(d.activeDomainCards)activeDomainCards=d.activeDomainCards;if(d.domainCardStates)domainCardStates=d.domainCardStates;domainPickerState26.length=0;if(d.domainPickerState26)domainPickerState26.push(...d.domainPickerState26);applyFields27(s.fields||s.form);renderHeritageUI();renderTransformationUI();const multi=document.getElementById('container-multiclass');if(multi)multi.style.display=document.getElementById('toggle-multiclass')?.checked?'block':'none';applyFields27(s.fields||s.form);if(s.appearance){document.documentElement.setAttribute('style',s.appearance.htmlStyle||'');document.body.className=s.appearance.bodyClass||'layout-focus';document.body.setAttribute('style',s.appearance.bodyStyle||'');currentLayout=s.appearance.layout||'focus';currentLogoTheme=s.appearance.logoTheme||'white';toggleLogoTheme(currentLogoTheme)}renderEquipmentSlots();renderExperienceSlots();renderInventorySlots();renderDomainCards();refreshClassFeatures();applyFields27(s.fields||s.form);
-/*
- * Restore marked Traits.
- */
-/*if (Array.isArray(d.markedTraits)) {
-  document
-    .querySelectorAll('.stat-box.marked')
-    .forEach(el => {
-      el.classList.remove('marked');
-    });
-  d.markedTraits.forEach(id => {
-    const trait = document.getElementById(id);
-    if (trait) {
-      trait.classList.add('marked');
-    }
-  });
-}*/
 /*
  * Restore Primary and Multiclass Class Feature resources.
  *
