@@ -1,8 +1,8 @@
-# Daggerheart-Character-Sheet
-<h3>Who is the for?</h3>
-<p>Anyone who wants to track their Daggerheart character on a lightweight offline friendly digital HTML. In this first version it is essentially digital version of the paper character sheet.</p>
+# Daggerheart Character Sheet
+<h3>Who is this for?</h3>
+<p>Anyone who wants to track their Daggerheart character on a lightweight offline friendly digital HTML. In this first version it is essentially a digital version of the paper character sheet.</p>
 <h3>What is it</h3>
-<p>A Lightweight digital character sheet. Based on <a href="https://www.daggerheart.com/srd/">Daggerhearts SRD 2.0</a>. This includes core and Hope and Fear Expansion</p>
+<p>A Lightweight digital character sheet. Based on <a href="https://www.daggerheart.com/srd/">Daggerhearts SRD 2.0</a>. This includes core game and the Hope and Fear expansion</p>
 <h3>What is included</h3>
 <li>SRD 2.0 Classes</li>
 <li>SRD 2.0 Ancestry</li>
@@ -17,9 +17,12 @@
 <li>Custom Die roller</li>
 <li>Campaign Frame: Motherboard</li>
 <li>Custom Themes</li>
-<li>Equipment bulk upload via CSV</li>
+<li>Bulk upload via CSV</li>
 <li>Limited short/long rest automation</li>
+<li>Save and Load sheets via json.</li>
 <li>This was code assisted by Copilot and Gemini but does not use AI</li>
 <h3>Other</h3>
 <p>This is a digital character sheet. Version 1 does not include any automations. This will be the plan for V2. I will work on getting the rest of the SRD included. This doesn't autosave. To Save and Load json configs, Use the buttons in Admin section of the Menu. Feel free to download and use offline.</p>
 <p>Here is the <a href="https://luvaboveall.github.io/Daggerheart-Character-Sheet/DHCS.html">character sheet</a></p>
+</break>
+<p>There is a slight bug with save sheet feature. I recommend taking a screenshot while I work it out.</p>
