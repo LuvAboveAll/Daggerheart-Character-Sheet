@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love's Daggerheart Loot</title>
+    <!-- Custom Inline SVG Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f3c65f'/%3E%3Cstop offset='100%25' stop-color='%23b58324'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='32,4 58,20 58,44 32,60 6,44 6,20' fill='%23161822' stroke='url(%23g)' stroke-width='4'/%3E%3Cpath d='M32 45 C22 36, 16 30, 16 23 C16 18, 20 15, 24 15 C27.5 15, 30.5 17.5, 32 20 C33.5 17.5, 36.5 15, 40 15 C44 15, 48 18, 48 23 C48 30, 42 36, 32 45 Z' fill='url(%23g)'/%3E%3C/svg%3E">
+    <!-- Google Fonts matching Daggerheart Fantasy Aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f111a;
+            --bg-secondary: #181b28;
+            --bg-card: #1f2335;
+            --bg-input: #131520;
+            --accent-gold: #e2b857;
+            --accent-gold-hover: #f3cc70;
+            --accent-purple: #8b5cf6;
+            --accent-purple-glow: rgba(139, 92, 246, 0.25);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #2e344e;
+            --border-gold: rgba(226, 184, 87, 0.4);
+            --danger: #ef4444;
+            --danger-bg: rgba(239, 68, 68, 0.15);
+            --success: #10b981;
+            --rarity-common: #94a3b8;
+            --rarity-uncommon: #34d399;
+            --rarity-rare: #60a5fa;
+            --rarity-legendary: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            background-image: radial-gradient(circle at top center, #1d2136 0%, #0f111a 70%);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            line-height: 1.5;
+            padding-bottom: 5rem;
+        }
+
+        h1, h2, h3, .fantasy-font {
+            font-family: 'Cinzel', Georgia, serif;
+            letter-spacing: 0.04em;
+        }
+
+        /* Header & Top Dice Roller Bar */
+        header {
+            background: linear-gradient(180deg, #1a1e2e 0%, #131622 100%);
+            border-bottom: 2px solid var(--border-gold);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand h1 {
+            font-size: 1.45rem;
+            color: var(--accent-gold);
+            text-shadow: 0 2px 10px rgba(226, 184, 87, 0.3);
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Top Dice Roller Bar */
+        .dice-roller-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-card);
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-gold);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .dice-input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dice-input-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .dice-input-group input[type="number"] {
+            width: 65px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .dice-tag {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: var(--accent-purple);
+            background: var(--accent-purple-glow);
+            padding: 0.25rem 0.55rem;
+            border-radius: 6px;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #e2b857 0%, #c4932b 100%);
+            color: #0f111a;
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 10px rgba(226, 184, 87, 0.3);
+        }
+
+        .btn-gold:hover {
+            background: linear-gradient(135deg, #f3cc70 0%, #d4a135 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(226, 184, 87, 0.45);
+        }
+
+        .btn-gold:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.7rem;
+            font-size: 0.8rem;
+        }
+
+        /* Header Right Controls (Import CSV + Layout Switcher) */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .db-badge {
+            font-size: 0.75rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.3rem 0.6rem;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        /* Main Two-Column Layout (Mobile First -> Desktop Toggleable) */
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 1.5rem auto;
+            padding: 0 1.25rem;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        /* Desktop Two-Column Mode */
+        @media (min-width: 900px) {
+            .layout-grid.desktop-mode {
+                grid-template-columns: 390px 1fr;
+            }
+        }
+
+        /* Forced Mobile Preview Mode on Desktop */
+        .layout-grid.mobile-forced {
+            max-width: 480px;
+            margin: 0 auto;
+            grid-template-columns: 1fr !important;
+        }
+
+        /* Panels */
+        .panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Form Controls */
+        .control-section {
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .control-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-label {
+            display: block;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 0.65rem;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .form-row label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        select, input[type="number"] {
+            background: var(--bg-input);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.5rem 0.65rem;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        /* Probability Grid */
+        .prob-row {
+            display: grid;
+            grid-template-columns: 1fr 90px;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.55rem;
+            background: var(--bg-card);
+            padding: 0.45rem 0.65rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .prob-row-label {
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .prob-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prob-input-wrap input {
+            width: 100%;
+            padding-right: 1.5rem;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .prob-input-wrap span {
+            position: absolute;
+            right: 0.55rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        /* Filter Picklist + Probability Row */
+        .filter-prob-row {
+            display: grid;
+            grid-template-columns: 1fr 85px;
+            gap: 0.5rem;
+            margin-bottom: 0.65rem;
+            align-items: end;
+        }
+
+        .filter-prob-row .field-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .filter-prob-row label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        /* Percentage Calculator Box */
+        .calc-box {
+            margin-top: 0.65rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .calc-valid {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: var(--success);
+        }
+
+        .calc-error {
+            background: var(--danger-bg);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #fca5a5;
+        }
+
+        /* Right Column: Results Display */
+        .roll-summary-banner {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(226, 184, 87, 0.12) 100%);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 0.9rem 1.1rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .roll-summary-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.88rem;
+        }
+
+        .stat-pill {
+            background: var(--bg-input);
+            padding: 0.3rem 0.65rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-pill strong {
+            color: var(--accent-gold);
+        }
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+
+        /* Loot Item Card (Daggerheart Card Style) */
+        .loot-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-gold);
+            border-radius: 10px;
+            padding: 1rem 1.15rem;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            position: relative;
+        }
+
+        .loot-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateX(2px);
+        }
+
+        .loot-card.is-optional {
+            border-style: dashed;
+            border-left-style: solid;
+            border-left-color: var(--accent-purple);
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.08) 0%, var(--bg-card) 40%);
+        }
+
+        .optional-tag {
+            display: inline-block;
+            background: var(--accent-purple);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.45rem;
+            vertical-align: middle;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .card-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-tier {
+            background: rgba(226, 184, 87, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid rgba(226, 184, 87, 0.35);
+        }
+
+        .badge-type {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text-primary);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .badge-rarity-Common { color: var(--rarity-common); border: 1px solid var(--rarity-common); }
+        .badge-rarity-Uncommon { color: var(--rarity-uncommon); border: 1px solid var(--rarity-uncommon); }
+        .badge-rarity-Rare { color: var(--rarity-rare); border: 1px solid var(--rarity-rare); }
+        .badge-rarity-Legendary { color: var(--rarity-legendary); border: 1px solid var(--rarity-legendary); background: rgba(245, 158, 11, 0.12); }
+
+        .card-stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.55rem 0;
+        }
+
+        .stat-chip {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            padding: 0.22rem 0.55rem;
+            border-radius: 5px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-chip b {
+            color: var(--text-primary);
+        }
+
+        .card-feature {
+            font-size: 0.86rem;
+            color: var(--accent-gold);
+            margin-top: 0.45rem;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Fixed Bottom-Right SVG Logo */
+        .bottom-right-logo {
+            position: fixed;
+            bottom: 16px;
+            right: 18px;
+            z-index: 90;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(22, 24, 34, 0.88);
+            backdrop-filter: blur(6px);
+            border: 1px solid var(--border-gold);
+            padding: 6px 12px;
+            border-radius: 999px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .bottom-right-logo span {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            letter-spacing: 0.06em;
+        }
+
+        .preset-note {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            background: rgba(226, 184, 87, 0.08);
+            border-left: 2px solid var(--accent-gold);
+            padding: 0.45rem 0.65rem;
+            border-radius: 0 6px 6px 0;
+            margin-top: 0.45rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="brand">
+            <!-- Header Emblem -->
+            <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="32,3 59,19 59,45 32,61 5,45 5,19" fill="#181b28" stroke="#e2b857" stroke-width="3.5"/>
+                <path d="M32 46 C21 36, 15 30, 15 22.5 C15 17.5, 19.5 14, 24 14 C27.5 14, 30.5 16.5, 32 19.5 C33.5 16.5, 36.5 14, 40 14 C44.5 14, 49 17.5, 49 22.5 C49 30, 43 36, 32 46 Z" fill="#e2b857"/>
+            </svg>
+            <div>
+                <h1>Love's Daggerheart Loot</h1>
+                <div class="brand-subtitle">Random Treasure &amp; Merchant Generator</div>
+            </div>
+        </div>
+
+        <!-- Top Dice Roller -->
+        <div class="dice-roller-bar">
+            <div class="dice-input-group">
+                <label for="diceCountInput">Dice Count (1 or 2):</label>
+                <input type="number" id="diceCountInput" min="1" max="10" value="1" title="Number of d12 dice to roll">
+                <span class="dice-tag">d12</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" id="randomDiceCountBtn" title="Randomly pick 1 or 2 dice">
+                🎲 Random (1 or 2)
+            </button>
+            <button type="button" class="btn btn-gold" id="rollLootBtn">
+                ⚔️ Roll for loot
+            </button>
+        </div>
+
+        <!-- Import CSV & View Toggle -->
+        <div class="header-actions">
+            <span class="db-badge" id="dbStatusBadge">DB: 24 Built-in Items</span>
+            <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
+            
