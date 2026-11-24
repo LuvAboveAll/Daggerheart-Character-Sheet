@@ -1,646 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love's Daggerheart Loot</title>
-    <!-- Custom Inline SVG Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f3c65f'/%3E%3Cstop offset='100%25' stop-color='%23b58324'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='32,4 58,20 58,44 32,60 6,44 6,20' fill='%23161822' stroke='url(%23g)' stroke-width='4'/%3E%3Cpath d='M32 45 C22 36, 16 30, 16 23 C16 18, 20 15, 24 15 C27.5 15, 30.5 17.5, 32 20 C33.5 17.5, 36.5 15, 40 15 C44 15, 48 18, 48 23 C48 30, 42 36, 32 45 Z' fill='url(%23g)'/%3E%3C/svg%3E">
-    <!-- Google Fonts matching Daggerheart Fantasy Aesthetic -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0f111a;
-            --bg-secondary: #181b28;
-            --bg-card: #1f2335;
-            --bg-input: #131520;
-            --accent-gold: #e2b857;
-            --accent-gold-hover: #f3cc70;
-            --accent-purple: #8b5cf6;
-            --accent-purple-glow: rgba(139, 92, 246, 0.25);
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --border-color: #2e344e;
-            --border-gold: rgba(226, 184, 87, 0.4);
-            --danger: #ef4444;
-            --danger-bg: rgba(239, 68, 68, 0.15);
-            --success: #10b981;
-            --rarity-common: #94a3b8;
-            --rarity-uncommon: #34d399;
-            --rarity-rare: #60a5fa;
-            --rarity-legendary: #f59e0b;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            background-image: radial-gradient(circle at top center, #1d2136 0%, #0f111a 70%);
-            color: var(--text-primary);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            min-height: 100vh;
-            line-height: 1.5;
-            padding-bottom: 5rem;
-        }
-
-        h1, h2, h3, .fantasy-font {
-            font-family: 'Cinzel', Georgia, serif;
-            letter-spacing: 0.04em;
-        }
-
-        /* Header & Top Dice Roller Bar */
-        header {
-            background: linear-gradient(180deg, #1a1e2e 0%, #131622 100%);
-            border-bottom: 2px solid var(--border-gold);
-            padding: 1rem 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .brand h1 {
-            font-size: 1.45rem;
-            color: var(--accent-gold);
-            text-shadow: 0 2px 10px rgba(226, 184, 87, 0.3);
-        }
-
-        .brand-subtitle {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        /* Top Dice Roller Bar */
-        .dice-roller-bar {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.75rem;
-            background: var(--bg-card);
-            padding: 0.6rem 1rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-gold);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-
-        .dice-input-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .dice-input-group label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            white-space: nowrap;
-        }
-
-        .dice-input-group input[type="number"] {
-            width: 65px;
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            color: var(--accent-gold);
-            font-weight: 700;
-            font-size: 1rem;
-            padding: 0.4rem 0.5rem;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .dice-tag {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            color: var(--accent-purple);
-            background: var(--accent-purple-glow);
-            padding: 0.25rem 0.55rem;
-            border-radius: 6px;
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            font-size: 0.9rem;
-        }
-
-        .btn {
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            border: none;
-            border-radius: 6px;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.45rem;
-        }
-
-        .btn-gold {
-            background: linear-gradient(135deg, #e2b857 0%, #c4932b 100%);
-            color: #0f111a;
-            font-family: 'Cinzel', serif;
-            font-weight: 800;
-            font-size: 0.95rem;
-            box-shadow: 0 2px 10px rgba(226, 184, 87, 0.3);
-        }
-
-        .btn-gold:hover {
-            background: linear-gradient(135deg, #f3cc70 0%, #d4a135 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(226, 184, 87, 0.45);
-        }
-
-        .btn-gold:active {
-            transform: translateY(0);
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-        }
-
-        .btn-sm {
-            padding: 0.35rem 0.7rem;
-            font-size: 0.8rem;
-        }
-
-        /* Header Right Controls (Import CSV + Layout Switcher) */
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-        }
-
-        .db-badge {
-            font-size: 0.75rem;
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 0.3rem 0.6rem;
-            border-radius: 999px;
-            font-weight: 600;
-        }
-
-        /* Main Two-Column Layout (Mobile First -> Desktop Toggleable) */
-        .main-wrapper {
-            max-width: 1400px;
-            margin: 1.5rem auto;
-            padding: 0 1.25rem;
-        }
-
-        .layout-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            align-items: start;
-        }
-
-        /* Desktop Two-Column Mode */
-        @media (min-width: 900px) {
-            .layout-grid.desktop-mode {
-                grid-template-columns: 390px 1fr;
-            }
-        }
-
-        /* Forced Mobile Preview Mode on Desktop */
-        .layout-grid.mobile-forced {
-            max-width: 480px;
-            margin: 0 auto;
-            grid-template-columns: 1fr !important;
-        }
-
-        /* Panels */
-        .panel {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.25rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-        }
-
-        .panel-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .panel-title {
-            font-size: 1.1rem;
-            color: var(--accent-gold);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Form Controls */
-        .control-section {
-            margin-bottom: 1.25rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed var(--border-color);
-        }
-
-        .control-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .section-label {
-            display: block;
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--accent-gold);
-            font-weight: 700;
-            margin-bottom: 0.65rem;
-        }
-
-        .form-row {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .form-row label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        select, input[type="number"] {
-            background: var(--bg-input);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 0.5rem 0.65rem;
-            font-size: 0.9rem;
-            font-family: 'Inter', sans-serif;
-            transition: border-color 0.2s;
-        }
-
-        select:focus, input[type="number"]:focus {
-            outline: none;
-            border-color: var(--accent-gold);
-        }
-
-        /* Probability Grid */
-        .prob-row {
-            display: grid;
-            grid-template-columns: 1fr 90px;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.55rem;
-            background: var(--bg-card);
-            padding: 0.45rem 0.65rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .prob-row-label {
-            font-size: 0.88rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .prob-input-wrap {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .prob-input-wrap input {
-            width: 100%;
-            padding-right: 1.5rem;
-            text-align: right;
-            font-weight: 600;
-        }
-
-        .prob-input-wrap span {
-            position: absolute;
-            right: 0.55rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            pointer-events: none;
-        }
-
-        /* Filter Picklist + Probability Row */
-        .filter-prob-row {
-            display: grid;
-            grid-template-columns: 1fr 85px;
-            gap: 0.5rem;
-            margin-bottom: 0.65rem;
-            align-items: end;
-        }
-
-        .filter-prob-row .field-col {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .filter-prob-row label {
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-        }
-
-        /* Percentage Calculator Box */
-        .calc-box {
-            margin-top: 0.65rem;
-            padding: 0.6rem 0.75rem;
-            border-radius: 8px;
-            font-size: 0.83rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .calc-valid {
-            background: rgba(16, 185, 129, 0.12);
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            color: var(--success);
-        }
-
-        .calc-error {
-            background: var(--danger-bg);
-            border: 1px solid rgba(239, 68, 68, 0.5);
-            color: #fca5a5;
-        }
-
-        /* Right Column: Results Display */
-        .roll-summary-banner {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(226, 184, 87, 0.12) 100%);
-            border: 1px solid var(--border-gold);
-            border-radius: 10px;
-            padding: 0.9rem 1.1rem;
-            margin-bottom: 1.25rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .roll-summary-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            font-size: 0.88rem;
-        }
-
-        .stat-pill {
-            background: var(--bg-input);
-            padding: 0.3rem 0.65rem;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-        }
-
-        .stat-pill strong {
-            color: var(--accent-gold);
-        }
-
-        .results-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-        }
-
-        /* Loot Item Card (Daggerheart Card Style) */
-        .loot-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--accent-gold);
-            border-radius: 10px;
-            padding: 1rem 1.15rem;
-            transition: transform 0.15s ease, border-color 0.15s ease;
-            position: relative;
-        }
-
-        .loot-card:hover {
-            border-color: var(--accent-gold);
-            transform: translateX(2px);
-        }
-
-        .loot-card.is-optional {
-            border-style: dashed;
-            border-left-style: solid;
-            border-left-color: var(--accent-purple);
-            background: linear-gradient(90deg, rgba(139, 92, 246, 0.08) 0%, var(--bg-card) 40%);
-        }
-
-        .optional-tag {
-            display: inline-block;
-            background: var(--accent-purple);
-            color: #fff;
-            font-size: 0.72rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            margin-right: 0.45rem;
-            vertical-align: middle;
-        }
-
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.45rem;
-        }
-
-        .card-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.12rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .card-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            flex-shrink: 0;
-        }
-
-        .badge {
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 0.2rem 0.55rem;
-            border-radius: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .badge-tier {
-            background: rgba(226, 184, 87, 0.15);
-            color: var(--accent-gold);
-            border: 1px solid rgba(226, 184, 87, 0.35);
-        }
-
-        .badge-type {
-            background: rgba(148, 163, 184, 0.15);
-            color: var(--text-primary);
-            border: 1px solid rgba(148, 163, 184, 0.3);
-        }
-
-        .badge-rarity-Common { color: var(--rarity-common); border: 1px solid var(--rarity-common); }
-        .badge-rarity-Uncommon { color: var(--rarity-uncommon); border: 1px solid var(--rarity-uncommon); }
-        .badge-rarity-Rare { color: var(--rarity-rare); border: 1px solid var(--rarity-rare); }
-        .badge-rarity-Legendary { color: var(--rarity-legendary); border: 1px solid var(--rarity-legendary); background: rgba(245, 158, 11, 0.12); }
-
-        .card-stats-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 0.55rem 0;
-        }
-
-        .stat-chip {
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            padding: 0.22rem 0.55rem;
-            border-radius: 5px;
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-        }
-
-        .stat-chip b {
-            color: var(--text-primary);
-        }
-
-        .card-feature {
-            font-size: 0.86rem;
-            color: var(--accent-gold);
-            margin-top: 0.45rem;
-        }
-
-        .card-desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 0.3rem;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--text-muted);
-        }
-
-        .empty-state h3 {
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Fixed Bottom-Right SVG Logo */
-        .bottom-right-logo {
-            position: fixed;
-            bottom: 16px;
-            right: 18px;
-            z-index: 90;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(22, 24, 34, 0.88);
-            backdrop-filter: blur(6px);
-            border: 1px solid var(--border-gold);
-            padding: 6px 12px;
-            border-radius: 999px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
-            pointer-events: none;
-            user-select: none;
-        }
-
-        .bottom-right-logo span {
-            font-family: 'Cinzel', serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            letter-spacing: 0.06em;
-        }
-
-        .preset-note {
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-            background: rgba(226, 184, 87, 0.08);
-            border-left: 2px solid var(--accent-gold);
-            padding: 0.45rem 0.65rem;
-            border-radius: 0 6px 6px 0;
-            margin-top: 0.45rem;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Love’s Daggerheart Loot</title>
+<!-- FAVICON -->
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#f3ead6;--panel:#fbf5e6;--panel2:#efe3c8;--ink:#2a2036;--muted:#6b5f78;--gold:#8a6a1c;--accent:#8e2f45;--line:#cdb98a;--err:#a3162f;--ok:#2f6b3f;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#150f26;--panel:#211a3a;--panel2:#2b2248;--ink:#efe6d2;--muted:#a99dc0;--gold:#d9b45a;--accent:#e0647c;--line:#4a3d78;--err:#ff8095;--ok:#7fd49a}}
+:root[data-theme="dark"]{--bg:#150f26;--panel:#211a3a;--panel2:#2b2248;--ink:#efe6d2;--muted:#a99dc0;--gold:#d9b45a;--accent:#e0647c;--line:#4a3d78;--err:#ff8095;--ok:#7fd49a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Lora,Georgia,serif;line-height:1.5;padding:0 14px 110px}
+h1,h2,h3{font-family:Cinzel,Georgia,serif;margin:0;color:var(--gold);letter-spacing:.02em}
+header{max-width:1100px;margin:0 auto;padding:20px 0 10px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:clamp(1.5rem,5vw,2.3rem)}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button,select,input{font:inherit;color:var(--ink)}
+button{cursor:pointer;border:1px solid var(--gold);background:var(--panel2);padding:9px 14px;border-radius:6px;min-height:40px}
+button:hover{background:var(--gold);color:var(--bg)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-family:Cinzel,Georgia,serif;font-weight:700;font-size:1.05rem}
+button.primary:hover{filter:brightness(1.12);color:#fff}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+select,input[type=number]{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px;min-height:40px;width:100%}
+main{max-width:1100px;margin:0 auto;display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:860px){main{grid-template-columns:350px 1fr;align-items:start}aside{position:sticky;top:12px}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:14px}
+.card h2{font-size:1.1rem;margin-bottom:10px}
+.roller{border-color:var(--gold);border-width:2px}
+.row{display:grid;grid-template-columns:1fr 84px;gap:8px;align-items:center;margin-bottom:8px}
+.row.single{grid-template-columns:1fr}
+label{font-size:.95rem}
+.total{font-size:.9rem;padding:8px 10px;border-radius:6px;background:var(--panel2);margin-top:4px}
+.total.bad{color:var(--err);border:1px solid var(--err)}
+.total.good{color:var(--ok)}
+.hint{color:var(--muted);font-size:.85rem;margin:6px 0 0}
+.dice{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.die{min-width:38px;text-align:center;padding:4px 8px;border:1px solid var(--gold);border-radius:6px;font-family:Cinzel,serif;font-weight:700}
+.item{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+.item.optional{border-left-style:dashed;opacity:.92}
+.item h3{font-size:1.05rem;color:var(--ink)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.tag{font-size:.8rem;border:1px solid var(--line);background:var(--panel2);border-radius:99px;padding:1px 9px}
+.tag.opt{border-color:var(--accent);color:var(--accent);font-weight:600}
+.Common{border-left-color:#8c8c8c}.Uncommon{border-left-color:#4aa86b}.Rare{border-left-color:#4a86d9}.Legendary{border-left-color:#d9a21c}
+.stats{font-size:.9rem;color:var(--muted)}
+.feature{margin:6px 0 0}
+.err{color:var(--err);border:1px solid var(--err);border-radius:6px;padding:10px;margin-bottom:10px}
+.empty{color:var(--muted);text-align:center;padding:36px 10px;border:1px dashed var(--line);border-radius:8px}
+.logo{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:64px;height:64px;z-index:5;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45))}
+</style>
 </head>
 <body>
-
 <header>
-    <div class="header-container">
-        <div class="brand">
-            <!-- Header Emblem -->
-            <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="32,3 59,19 59,45 32,61 5,45 5,19" fill="#181b28" stroke="#e2b857" stroke-width="3.5"/>
-                <path d="M32 46 C21 36, 15 30, 15 22.5 C15 17.5, 19.5 14, 24 14 C27.5 14, 30.5 16.5, 32 19.5 C33.5 16.5, 36.5 14, 40 14 C44.5 14, 49 17.5, 49 22.5 C49 30, 43 36, 32 46 Z" fill="#e2b857"/>
-            </svg>
-            <div>
-                <h1>Love's Daggerheart Loot</h1>
-                <div class="brand-subtitle">Random Treasure &amp; Merchant Generator</div>
-            </div>
-        </div>
+  <h1>Love’s Daggerheart Loot</h1>
+  <div class="tools">
+    <button id="importBtn">Import CSV</button>
+    <button id="tplBtn">Download CSV template</button>
+    <input type="file" id="file" accept=".csv,text/csv" hidden>
+  </div>
+</header>
+<main>
+  <aside>
+    <section class="card">
+      <h2>Presets</h2>
+      <select id="preset" aria-label="Presets"></select>
+      <p class="hint" id="presetHint"></p>
+    </section>
+    <section class="card">
+      <h2>Rarity (required)</h2>
+      <div id="rarity"></div>
+      <div class="total" id="rTotal"></div>
+    </section>
+    <section class="card">
+      <h2>Equipment type</h2>
+      <div id="types"></div>
+      <div class="total" id="tTotal"></div>
+      <p class="hint">Leave all at 0% to draw from every type.</p>
+    </section>
+    <section class="card">
+      <h2>Filters</h2>
+      <div class="row single"><label for="fTier">Tier</label><select id="fTier"></select></div>
+      <div class="row single"><label for="fUse">Use</label><select id="fUse"></select></div>
+      <div class="row single"><label for="fDmg">Damage type</label><select id="fDmg"></select></div>
+    </section>
+    <section class="card"><p class="hint" id="dbInfo" style="margin:0"></p></section>
+  </aside>
+  <section>
+    <div class="card roller">
+      <h2>Roll for loot</h2>
+      <div class="row"><label for="nDice">Number of d12 to roll</label><input type="number" id="nDice" min="1" max="20" step="1" value="1"></div>
+      <button class="primary" id="rollBtn">Roll for loot</button>
+      <div class="dice" id="dice" aria-live="polite"></div>
+      <div id="rollInfo" class="hint"></div>
+    </div>
+    <div id="msg"></div>
+    <div id="results"><div class="empty">Set your rarity and type mix, then roll. Results appear here.</div></div>
+  </section>
+</main>
 
-        <!-- Top Dice Roller -->
-        <div class="dice-roller-bar">
-            <div class="dice-input-group">
-                <label for="diceCountInput">Dice Count (1 or 2):</label>
-                <input type="number" id="diceCountInput" min="1" max="10" value="1" title="Number of d12 dice to roll">
-                <span class="dice-tag">d12</span>
-            </div>
-            <button type="button" class="btn btn-secondary btn-sm" id="randomDiceCountBtn" title="Randomly pick 1 or 2 dice">
-                🎲 Random (1 or 2)
-            </button>
-            <button type="button" class="btn btn-gold" id="rollLootBtn">
-                ⚔️ Roll for loot
-            </button>
-        </div>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 638.82 155.6">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
 
-        <!-- Import CSV & View Toggle -->
-        <div class="header-actions">
-            <span class="db-badge" id="dbStatusBadge">DB: 24 Built-in Items</span>
-            <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
-            
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="23.92" y1="13.42" x2="74.21" y2="97.12" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#382d7a"/>
+      <stop offset=".12" stop-color="#36337f"/>
+      <stop offset=".3" stop-color="#324590"/>
+      <stop offset=".5" stop-color="#2c63ab"/>
+      <stop offset=".61" stop-color="#2878be"/>
+      <stop offset="1" stop-color="#81cdc3"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path class="cls-2" d="M100.03,107.77v-54.71h19.62c4.77,0,8.83.77,12.19,2.31,3.36,1.54,6.1,3.61,8.21,6.23,2.11,2.62,3.65,5.56,4.61,8.81.96,3.26,1.45,6.59,1.45,10,0,3.1-.46,6.25-1.39,9.46-.93,3.2-2.42,6.16-4.49,8.87-2.07,2.71-4.81,4.89-8.23,6.55s-7.63,2.48-12.66,2.48h-19.3ZM111.28,97.06h9.14c2.58,0,4.76-.49,6.55-1.48,1.78-.99,3.22-2.31,4.32-3.95,1.09-1.64,1.9-3.44,2.4-5.39.51-1.95.76-3.89.76-5.82,0-2.03-.26-4.04-.78-6.02-.52-1.98-1.31-3.78-2.36-5.39-1.06-1.62-2.42-2.9-4.08-3.87s-3.65-1.45-5.94-1.45h-10v33.37Z"/>
+    <path class="cls-2" d="M142.74,107.77l21.34-54.71h10.71l21.38,54.71h-12.23l-4.18-10.98h-20.67l-4.1,10.98h-12.23ZM162.83,86.43h13.13l-4.96-12.78c-.16-.39-.34-.84-.55-1.35-.21-.51-.4-1.02-.59-1.54-.18-.52-.34-.99-.47-1.41-.13.42-.29.89-.47,1.41-.18.52-.38,1.04-.59,1.54-.21.51-.39.96-.55,1.35l-4.96,12.78Z"/>
+    <path class="cls-2" d="M216.84,108.7c-4.22,0-7.85-.79-10.88-2.36-3.04-1.58-5.52-3.71-7.44-6.41-1.93-2.7-3.36-5.73-4.3-9.11-.94-3.37-1.41-6.85-1.41-10.41,0-3.36.47-6.7,1.43-10.02s2.41-6.36,4.38-9.12c1.97-2.76,4.46-4.98,7.48-6.64,3.02-1.67,6.6-2.5,10.75-2.5,3.52,0,6.51.58,8.99,1.74,2.47,1.16,4.57,2.66,6.29,4.51,1.72,1.85,3.23,3.8,4.53,5.86l-9.85,5.59c-1.2-1.88-2.59-3.51-4.18-4.9s-3.52-2.09-5.78-2.09-4.35.55-5.94,1.64-2.85,2.51-3.79,4.26c-.94,1.75-1.62,3.65-2.03,5.71-.42,2.06-.62,4.05-.62,5.98,0,2.21.23,4.37.7,6.47.47,2.1,1.19,3.98,2.17,5.65.98,1.67,2.25,2.99,3.83,3.97,1.58.98,3.47,1.47,5.69,1.47,1.59,0,3.05-.36,4.4-1.07,1.34-.72,2.42-1.68,3.22-2.89s1.21-2.53,1.21-3.97v-.63h-9.07v-10.71h20.59v8.32c0,4.66-.9,8.61-2.7,11.84-1.8,3.23-4.23,5.68-7.31,7.35s-6.53,2.5-10.36,2.5Z"/>
+    <path class="cls-2" d="M265.21,108.7c-4.22,0-7.85-.79-10.88-2.36-3.04-1.58-5.52-3.71-7.44-6.41-1.93-2.7-3.36-5.73-4.3-9.11-.94-3.37-1.41-6.85-1.41-10.41,0-3.36.47-6.7,1.43-10.02s2.41-6.36,4.38-9.12c1.97-2.76,4.46-4.98,7.48-6.64,3.02-1.67,6.6-2.5,10.75-2.5,3.52,0,6.51.58,8.99,1.74,2.47,1.16,4.57,2.66,6.29,4.51,1.72,1.85,3.23,3.8,4.53,5.86l-9.85,5.59c-1.2-1.88-2.59-3.51-4.18-4.9s-3.52-2.09-5.78-2.09-4.35.55-5.94,1.64-2.85,2.51-3.79,4.26c-.94,1.75-1.62,3.65-2.03,5.71-.42,2.06-.62,4.05-.62,5.98,0,2.21.23,4.37.7,6.47.47,2.1,1.19,3.98,2.17,5.65.98,1.67,2.25,2.99,3.83,3.97,1.58.98,3.47,1.47,5.69,1.47,1.59,0,3.05-.36,4.4-1.07,1.34-.72,2.42-1.68,3.22-2.89s1.21-2.53,1.21-3.97v-.63h-9.07v-10.71h20.59v8.32c0,4.66-.9,8.61-2.7,11.84-1.8,3.23-4.23,5.68-7.31,7.35s-6.53,2.5-10.36,2.5Z"/>
+    <path class="cls-2" d="M291.59,107.77v-54.71h38.45v10.67h-27.2v10.47h15.51v10.67h-15.51v12.15h28.8v10.75h-40.06Z"/>
+    <path class="cls-2" d="M337.74,107.77v-54.71h26.03c4.58,0,8.23.8,10.92,2.4,2.7,1.6,4.62,3.73,5.78,6.37,1.16,2.64,1.74,5.5,1.74,8.58,0,2.06-.38,4.14-1.15,6.25-.77,2.11-1.92,4.03-3.46,5.76-1.54,1.73-3.44,3.02-5.71,3.85l10.47,21.49h-12.58l-10.08-19.81h-10.71v19.81h-11.25ZM349,77.36h14.93c1.67,0,2.99-.33,3.97-.98.98-.65,1.67-1.5,2.07-2.56s.61-2.18.61-3.38c0-1.09-.19-2.16-.57-3.2s-1.05-1.9-2.03-2.58c-.98-.68-2.33-1.02-4.04-1.02h-14.93v13.72Z"/>
+    <path class="cls-2" d="M389.17,107.77v-54.71h11.25v21.18h22.2v-21.18h11.25v54.71h-11.25v-22.78h-22.2v22.78h-11.25Z"/>
+    <path class="cls-2" d="M442.86,107.77v-54.71h38.45v10.67h-27.2v10.47h15.51v10.67h-15.51v12.15h28.8v10.75h-40.06Z"/>
+    <path class="cls-2" d="M485.65,107.77l21.34-54.71h10.71l21.38,54.71h-12.23l-4.18-10.98h-20.67l-4.1,10.98h-12.23ZM505.74,86.43h13.13l-4.96-12.78c-.16-.39-.34-.84-.55-1.35-.21-.51-.4-1.02-.59-1.54-.18-.52-.34-.99-.47-1.41-.13.42-.29.89-.47,1.41-.18.52-.38,1.04-.59,1.54-.21.51-.39.96-.55,1.35l-4.96,12.78Z"/>
+    <path class="cls-2" d="M541.81,107.77v-54.71h26.03c4.58,0,8.23.8,10.92,2.4,2.7,1.6,4.62,3.73,5.78,6.37,1.16,2.64,1.74,5.5,1.74,8.58,0,2.06-.38,4.14-1.15,6.25-.77,2.11-1.92,4.03-3.46,5.76-1.54,1.73-3.44,3.02-5.71,3.85l10.47,21.49h-12.58l-10.08-19.81h-10.71v19.81h-11.25ZM553.06,77.36h14.93c1.67,0,2.99-.33,3.97-.98.98-.65,1.67-1.5,2.07-2.56s.61-2.18.61-3.38c0-1.09-.19-2.16-.57-3.2s-1.05-1.9-2.03-2.58c-.98-.68-2.33-1.02-4.04-1.02h-14.93v13.72Z"/>
+    <path class="cls-2" d="M603.24,107.77v-43.92h-15.63v-10.79h42.56v10.79h-15.67v43.92h-11.25Z"/>
+  </g>
+  <g>
+    <g>
+      <path class="cls-2" d="M45.88,107.83s3.28-3.28-1-11.85c-3.58-7.17-7.35-10.49-9.84-12.69-.45-.4-.85-.75-1.21-1.09-3.22-3.01-8.23-8.27-8.87-9.89-1.41-3.55-.09-8.45,1.19-13.19.43-1.59.83-3.08,1.08-4.34.35-1.78.12-3.5-.6-4.78l-5.22,5.08c-1.3,1.26-2.16,2.9-2.47,4.68l-3.06,17.69c-.08.43-.19.86-.02,1.31.18.44,11.38,18.32,11.38,18.32.16.25.35.47.56.67.2.21.42.4.67.56,0,0,11.87,7.44,16.5,10.29l.9-.77Z"/>
+      <path class="cls-2" d="M97.48,47.4l-19.36-19.36c-.24-.24-.55-.36-.86-.36s-.63.12-.86.36l-1.94,1.94c-.5.5-.5,1.3,0,1.79l1.93,1.93s.02.05,0,.06l-9.42,9.42s-.04.02-.05,0l-7.93-4.18c-.47-.25-.97-.42-1.48-.5-.27-.05-.55-.07-.83-.07-.24,0-.47.02-.71.05l-8.91,1.28c1.36,1.54,3.03,2.82,4.55,3.57.67.33,1.38.64,2.13.96,4.42,1.91,11.11,4.8,11.17,15.25v.68c0,3.09.02,6.93,2.11,8.52,7.7,5.86,5.88,17.44,5.65,18.75-1.11,6.21-2.59,8.54-5.11,10.88l-3.62,3.38c-.43,1.47-1.03,2.73-1.77,3.76-.52.72-1.02,1.37-1.52,1.98l5.16-.89c1.78-.31,3.42-1.17,4.68-2.47l11.69-12.03c1.26-1.3,2.08-2.96,2.33-4.75l2.56-17.77c.07-.51.07-1.03-.02-1.53-.09-.51-.26-1.01-.5-1.48l-4.18-7.93s0-.04,0-.05l9.42-9.42s.05-.02.06,0l1.96,1.96c.24.24.55.36.86.36s.63-.12.86-.36l1.94-1.94c.5-.5.5-1.3,0-1.79Z"/>
+    </g>
+    <path class="cls-1" d="M47.98,110.24s5.33-4.53-.25-15.69c-4.48-8.97-9.28-12.4-11.72-14.69-4.29-4.02-7.85-8.15-8.08-8.73-1.41-3.56,1.46-10.8,2.43-15.74,1.77-8.98-7.42-15.1-11.49-4.95-2.96,7.39-14.72-14.39-8.36-27.27,2.29-4.63,10.44-8.28,18.25-5.48,0,0-2.76.83-4.55,3.79-4.51,7.46,4.03,16.47,5.31,17.59,6.93,6.12,9.21,8.71,8.75,13.91-.23,2.59-2.35,6.89,5.37,14.34,4.42,4.26,13.14,12.68,16.4,20.95,2.26,5.73,1.64,12.39-.51,15.37-2.15,2.99-3.96,4.71-5.86,5.8-4.49,2.6-5.69.78-5.69.78ZM54.99,16.22c-1.86-1.07-2.87-1.64-2.81-2.47.09-1.15,2.83-1.68,2.52-3.03-1.18-5.13-7.29-4.9-7.29-4.9,0,0,1.78,1.82,1.14,2.7-.63.88-3.71.66-5.99.37-2.28-.29-3.82.27-3.58,1.83.24,1.56,2.44,1.86,5.04,4.53,2.61,2.67-.55,2.97-3.37,3.11-2.81.14-6.25.08-9.06,2.84-2.02,1.98-4.75,5.32.04,13.49,7.84,13.35,17.29,12.87,20.38,21.27.55,1.49.52,3.51-1.28,3.6-1.34.07-4.25-3.2-4.81-6.4-1.34-.06-4.57,5.39-1.1,9.27,4.58,5.13,12.1,10.76,16.65,18.22,6.1,10,3.85,15.38,3.85,15.38,2.05-1.9,3.14-3.55,4.14-9.09.61-3.4.93-11.55-4.44-15.63-3.57-2.71-3.35-8.06-3.37-11.73-.06-9.83-6.64-10.95-11.52-13.36-4.19-2.07-10.25-7.89-8.83-14.28.4-1.8,1.07-2.92,1.97-3.62,1.43-1.1,2.98-1.02,11.01-.68,2.57.11,4.79.18,6.72-1.02.5-.31,1.6-1.02,2.05-2.35.04-.1.33-1.02.12-1.99-.41-1.85-2.45-2.74-8.2-6.06Z"/>
+    <path class="cls-2" d="M94.22,39.49l-9.8-9.8c-.55-.55-.55-1.44,0-1.99l2.87-4.19c.55-.55,1.44-.55,1.99,0l11.12,11.12c.55.55.55,1.44,0,1.99l-4.19,2.87c-.55.55-1.44.55-1.99,0Z"/>
+  </g>
+  <path class="cls-2" d="M366.1,141.91c-.1-.49-.39-.87-.84-1.08l-.73-.42c-.31-.16-.59-.24-.88-.24-.37,0-.9.12-1.36.71l-.02.03-.02.03c-1.06,1.57-2.44,2.84-4.12,3.78-1.66.93-3.53,1.4-5.55,1.4-1.62,0-3.15-.31-4.56-.91-1.42-.61-2.67-1.45-3.73-2.51-1.06-1.06-1.91-2.31-2.53-3.73-.61-1.41-.93-2.94-.93-4.56s.31-3.11.93-4.52c.62-1.42,1.47-2.68,2.53-3.73,1.06-1.06,2.31-1.91,3.73-2.53,1.41-.61,2.94-.93,4.56-.93,2.02,0,3.88.47,5.53,1.4,1.67.94,3.07,2.2,4.15,3.76.27.38.64.63,1.05.72.12.02.23.04.35.04.3,0,.59-.08.87-.24l.68-.38c.45-.21.75-.59.84-1.08.09-.45,0-.89-.26-1.23-.7-1.06-1.53-2.03-2.47-2.91-.95-.88-2-1.65-3.14-2.27-1.13-.62-2.35-1.11-3.62-1.45-1.28-.34-2.62-.51-4-.51-2.18,0-4.27.42-6.22,1.26-1.93.83-3.64,1.98-5.07,3.41-1.43,1.43-2.58,3.12-3.4,5.03-.84,1.92-1.26,4-1.26,6.18s.42,4.27,1.26,6.2c.83,1.92,1.98,3.61,3.41,5.03,1.43,1.42,3.13,2.55,5.06,3.38,1.94.83,4.03,1.26,6.22,1.26,1.38,0,2.73-.17,4.02-.51,1.29-.34,2.51-.83,3.64-1.45,1.13-.62,2.19-1.39,3.14-2.27.94-.87,1.77-1.85,2.47-2.91.26-.35.35-.78.26-1.23ZM363.7,127.61s-.03.01-.04.01c-.05,0-.09,0-.14-.02.06.01.12,0,.18,0ZM363.6,141.19s.03-.01.05-.01c.01,0,.03.01.04.01-.03,0-.06,0-.09,0Z"/>
+  <path class="cls-2" d="M397.39,123.21c-1.43-1.43-3.13-2.58-5.05-3.41-1.93-.83-4.01-1.26-6.2-1.26s-4.27.42-6.22,1.26c-1.93.83-3.64,1.98-5.07,3.41-1.43,1.43-2.58,3.12-3.4,5.03-.83,1.92-1.26,4-1.26,6.18s.42,4.27,1.26,6.2c.83,1.92,1.98,3.61,3.41,5.03,1.43,1.42,3.13,2.55,5.06,3.38,1.94.83,4.03,1.26,6.22,1.26s4.27-.42,6.2-1.26c1.92-.83,3.62-1.97,5.04-3.38,1.43-1.42,2.58-3.11,3.41-5.03.83-1.93,1.26-4.01,1.26-6.2s-.42-4.27-1.26-6.18c-.83-1.91-1.98-3.6-3.41-5.03ZM396.92,138.97c-.62,1.42-1.47,2.68-2.53,3.73-1.06,1.06-2.31,1.9-3.73,2.51-1.41.6-2.93.91-4.53.91s-3.15-.31-4.56-.91c-1.42-.61-2.67-1.45-3.73-2.51-1.06-1.06-1.91-2.31-2.53-3.73-.62-1.41-.93-2.94-.93-4.56s.31-3.11.93-4.52c.62-1.42,1.47-2.68,2.53-3.73,1.06-1.06,2.31-1.91,3.73-2.53,1.41-.61,2.94-.93,4.56-.93s3.11.31,4.52.93c1.42.62,2.67,1.47,3.73,2.53,1.05,1.05,1.91,2.31,2.53,3.73.61,1.41.93,2.93.93,4.52s-.31,3.15-.93,4.56Z"/>
+  <path class="cls-2" d="M436.93,119.09h-.73c-.83,0-1.5.39-1.87,1.11l-11.28,19.11-11.28-19.11c-.37-.71-1.03-1.11-1.87-1.11h-.73c-.46,0-.87.16-1.18.48-.31.31-.48.72-.48,1.18v27.32c0,.46.16.87.47,1.18.31.31.72.48,1.19.48h.84c.46,0,.87-.16,1.19-.48.31-.31.48-.72.48-1.19v-20.1l9.41,15.91c.35.66,1.01,1.04,1.85,1.04h.18c.84,0,1.5-.38,1.87-1.08l9.43-15.94v20.17c0,.46.16.87.47,1.18.31.31.72.48,1.19.48h.84c.46,0,.87-.16,1.18-.48.31-.31.48-.72.48-1.19v-27.32c0-.46-.16-.87-.48-1.18-.31-.31-.72-.48-1.18-.48Z"/>
+  <path class="cls-2" d="M469.59,125.83c-.51-1.32-1.27-2.5-2.26-3.5-.98-1-2.21-1.8-3.64-2.37-1.42-.57-3.05-.86-4.84-.86h-10.39c-.46,0-.87.16-1.18.48-.31.31-.48.72-.48,1.18v27.32c0,.46.16.87.47,1.18.31.31.72.48,1.19.48h.84c.46,0,.87-.16,1.18-.47.32-.32.48-.73.48-1.19v-7.26h7.89c1.79,0,3.42-.3,4.84-.88,1.43-.59,2.65-1.39,3.64-2.39.99-1,1.75-2.17,2.26-3.48.51-1.3.77-2.68.77-4.09s-.26-2.83-.76-4.14ZM458.78,136.76h-7.81v-13.61h7.81c1.19,0,2.26.19,3.17.55.91.36,1.68.86,2.31,1.49.62.62,1.09,1.34,1.41,2.15.32.82.48,1.71.48,2.63,0,.87-.16,1.73-.48,2.56-.31.81-.79,1.53-1.41,2.15-.62.63-1.4,1.13-2.32,1.51-.92.38-1.98.57-3.16.57Z"/>
+  <path class="cls-2" d="M487.63,120.26l-.02-.04-.02-.04c-.18-.31-.42-.57-.73-.77-.33-.22-.7-.32-1.09-.32h-1.03c-.39,0-.76.11-1.09.32-.3.19-.55.45-.73.76l-.02.04-.02.04-12.54,27.43c-.22.42-.22.89.02,1.32.24.45.71.72,1.24.72h1.1c.83,0,1.5-.43,1.83-1.19l2.37-5.28h16.71s2.41,5.29,2.41,5.29c.32.74.99,1.17,1.83,1.17h1.07c.54,0,1-.26,1.25-.72.23-.42.24-.9.01-1.32l-12.54-27.43ZM478.77,139.22l6.49-14.36,6.49,14.36h-12.98ZM499.03,148.71c.11-.03.2-.08.26-.18-.06.1-.15.15-.26.18Z"/>
+  <path class="cls-2" d="M519.26,119.09h-21.52c-.46,0-.87.16-1.18.48s-.48.72-.48,1.18v.81c0,.46.16.87.48,1.18.31.31.72.48,1.18.48h8.66v24.85c0,.46.16.87.47,1.18.32.32.73.48,1.19.48h.84c.46,0,.87-.16,1.18-.48.31-.31.48-.72.48-1.19v-24.85h8.7c.46,0,.87-.16,1.18-.48.31-.31.48-.72.48-1.18v-.81c0-.46-.16-.87-.48-1.18-.31-.31-.72-.48-1.18-.48Z"/>
+  <path class="cls-2" d="M527.82,119.09h-.84c-.46,0-.87.16-1.18.48-.31.31-.48.72-.48,1.18v27.32c0,.46.16.87.47,1.18.31.31.72.48,1.19.48h.84c.46,0,.87-.16,1.19-.48.31-.31.48-.72.48-1.19v-27.32c0-.46-.16-.87-.48-1.18-.31-.31-.72-.48-1.19-.48Z"/>
+  <path class="cls-2" d="M558.65,133.92c.76-.59,1.39-1.31,1.91-2.14.79-1.28,1.2-2.73,1.2-4.31,0-1.1-.2-2.17-.6-3.18-.41-1.02-1.03-1.94-1.84-2.71-.8-.76-1.79-1.37-2.95-1.82-1.15-.45-2.5-.67-4.02-.67h-12.27c-.46,0-.87.16-1.18.48-.31.31-.48.72-.48,1.18v27.32c0,.46.16.87.47,1.18.31.31.72.48,1.19.48h13.51c1.39,0,2.68-.23,3.82-.67,1.15-.45,2.14-1.08,2.95-1.86.82-.79,1.46-1.72,1.9-2.77.44-1.05.67-2.17.67-3.33,0-1.77-.52-3.38-1.53-4.78-.72-.99-1.64-1.79-2.75-2.4ZM542.59,123.15h9.65c.92,0,1.73.13,2.39.39.65.26,1.2.6,1.63,1.02.43.42.75.89.97,1.42.22.54.33,1.11.33,1.72s-.11,1.19-.33,1.74c-.22.55-.54,1.05-.95,1.48-.41.43-.9.77-1.48,1.02-.57.25-1.23.37-1.97.37h-10.24v-9.16ZM558.36,142.7c-.24.58-.59,1.11-1.03,1.55-.44.44-1,.8-1.65,1.07-.66.27-1.42.4-2.27.4h-10.82v-9.57h10.82c.85,0,1.61.14,2.27.4.66.27,1.22.62,1.66,1.05.44.43.79.94,1.03,1.5.24.56.36,1.14.36,1.77s-.12,1.24-.36,1.82Z"/>
+  <path class="cls-2" d="M587.71,145.61h-14.9v-24.85c0-.46-.16-.87-.48-1.18-.32-.31-.72-.48-1.19-.48h-.84c-.46,0-.87.16-1.18.48-.31.31-.48.72-.48,1.18v27.32c0,.46.16.87.47,1.18.31.31.72.48,1.19.48h17.41c.46,0,.87-.16,1.18-.48.31-.31.48-.72.48-1.19v-.81c0-.47-.17-.88-.48-1.19-.31-.31-.72-.47-1.18-.47Z"/>
+  <path class="cls-2" d="M614,123.22c.46,0,.87-.16,1.18-.48.31-.31.48-.72.48-1.18v-.81c0-.46-.16-.87-.48-1.18-.31-.31-.72-.48-1.18-.48h-18.36c-.46,0-.87.17-1.18.48-.31.31-.48.72-.48,1.18v27.32c0,.46.16.87.47,1.18.31.31.72.48,1.19.48h18.36c.46,0,.87-.16,1.18-.48.31-.31.48-.72.48-1.18v-.81c0-.46-.16-.87-.48-1.18-.31-.31-.72-.48-1.18-.48h-15.86v-8.91h13.25c.46,0,.87-.16,1.18-.48.31-.31.48-.72.48-1.18v-.73c0-.46-.16-.87-.48-1.18-.31-.31-.72-.48-1.18-.48h-13.25v-9.42h15.86Z"/>
+</svg>
+
+<script>
+const FIELDS=['index','tier','title','equiptype','use','dmgType','trait','range','damage','damageMod','burden','baseMajor','baseSevere','baseScore','feature','description','rarity'];
+const RAR=['Common','Uncommon','Rare','Legendary'];
+const TYPES=['Weapon','Armor','Loot','Consumable'];
+const DEFAULT_PRESETS={
+ 'Sparse selection':{min:1,max:6,rarity:{Common:100,Uncommon:0,Rare:0,Legendary:0},types:{Weapon:0,Armor:0,Loot:0,Consumable:0}},
+ 'Small merchant':{min:5,max:20,rarity:{Common:70,Uncommon:20,Rare:10,Legendary:0},types:{Weapon:30,Armor:20,Loot:25,Consumable:25}},
+ 'Medium merchant':{min:10,max:30,rarity:{Common:15,Uncommon:15,Rare:50,Legendary:20},types:{Weapon:20,Armor:20,Loot:30,Consumable:30}},
+ 'Large merchant':{min:20,max:40,rarity:{Common:10,Uncommon:10,Rare:60,Legendary:20},types:{Weapon:25,Armor:20,Loot:25,Consumable:30}},
+ 'Traveling sales':{min:10,max:20,rarity:{Common:25,Uncommon:25,Rare:25,Legendary:25},types:{Weapon:25,Armor:25,Loot:25,Consumable:25}}
+};
+const SAMPLE=[
+ {index:1,tier:1,title:'Rusty Shortsword',equiptype:'Weapon',use:'Primary',dmgType:'Physical',trait:'Agility',range:'Melee',damage:'d8',damageMod:'+1',burden:'One-Handed',feature:'Reliable: +1 to attack rolls.',description:'A chipped blade with a worn leather grip.',rarity:'Common'},
+ {index:2,tier:1,title:'Padded Vest',equiptype:'Armor',baseMajor:5,baseSevere:11,baseScore:3,feature:'Flexible: +1 to Evasion.',description:'Quilted layers of linen.',rarity:'Common'},
+ {index:3,tier:1,title:'Silver Locket',equiptype:'Loot',feature:'',description:'Holds a faded portrait.',rarity:'Common'},
+ {index:4,tier:1,title:'Healing Draught',equiptype:'Consumable',feature:'Clear 1d4 HP.',description:'A red vial that smells of mint.',rarity:'Common'},
+ {index:5,tier:2,title:'Emberbrand Staff',equiptype:'Weapon',use:'Primary',dmgType:'Magic',trait:'Knowledge',range:'Far',damage:'d10',damageMod:'+3',burden:'Two-Handed',feature:'Scorching: Mark a Stress to ignite a target.',description:'Charred wood wrapped in copper wire.',rarity:'Rare'},
+ {index:6,tier:2,title:'Gilded Chain Mail',equiptype:'Armor',baseMajor:7,baseSevere:15,baseScore:4,feature:'Heavy: -1 to Evasion.',description:'Links edged in gold.',rarity:'Uncommon'},
+ {index:7,tier:3,title:'Crown of the Fallen Star',equiptype:'Loot',feature:'Once per rest, reroll a Hope die.',description:'A circlet that hums faintly at night.',rarity:'Legendary'},
+ {index:8,tier:2,title:'Stormglass Elixir',equiptype:'Consumable',feature:'Gain 2 Hope.',description:'Lightning swirls in the bottle.',rarity:'Rare'}
+];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s||'').toLowerCase().trim().replace(/s$/,'');
+const rnd=n=>Math.floor(Math.random()*n);
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let DB=load('ldl_db',SAMPLE);
+let PRESETS=load('ldl_presets',DEFAULT_PRESETS);
+
+// ---- Build controls
+function pctRows(host,names,prefix){
+  host.innerHTML=names.map(n=>`<div class="row"><label for="${prefix}${n}">${n}</label><input type="number" id="${prefix}${n}" min="0" max="100" step="1" value="0" inputmode="numeric"> </div>`).join('');
+  host.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{$('preset').value='';presetHint();calc()}));
+}
+pctRows($('rarity'),RAR,'r_');pctRows($('types'),TYPES,'t_');
+$('r_Common').value=100;
+function presetOptions(){
+  $('preset').innerHTML='<option value="">Custom (use dice)</option>'+Object.keys(PRESETS).map(k=>`<option>${esc(k)}</option>`).join('');
+}
+presetOptions();
+function presetHint(){
+  const p=PRESETS[$('preset').value];
+  $('presetHint').textContent=p?`Rolls ${p.min} to ${p.max} items. Dice are ignored.`:'Custom mode uses the d12 roller.';
+  $('nDice').disabled=!!p;
+}
+$('preset').addEventListener('change',()=>{
+  const p=PRESETS[$('preset').value];
+  if(p){RAR.forEach(r=>$('r_'+r).value=p.rarity[r]||0);TYPES.forEach(t=>$('t_'+t).value=p.types[t]||0)}
+  presetHint();calc();
+});
+function fillFilter(id,label,field){
+  const vals=[...new Set(DB.map(r=>String(r[field]||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+  const sel=$(id),cur=sel.value;
+  sel.innerHTML=`<option value="">Any ${label}</option>`+vals.map(v=>`<option>${esc(v)}</option>`).join('');
+  if(vals.includes(cur))sel.value=cur;
+}
+function refreshDB(){
+  fillFilter('fTier','tier','tier');fillFilter('fUse','use','use');fillFilter('fDmg','damage type','dmgType');
+  $('dbInfo').textContent=`${DB.length} items in the database.`;
+}
+const pct=(prefix,names)=>Object.fromEntries(names.map(n=>[n,Math.max(0,Math.round(+$(prefix+n).value)||0)]));
+const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
+
+// ---- Percentage calculator
+function calc(){
+  const r=sum(pct('r_',RAR)),t=sum(pct('t_',TYPES));
+  const set=(el,tot,optional)=>{
+    const ok=tot===100||(optional&&tot===0);
+    el.className='total '+(ok?'good':'bad');
+    el.textContent=tot===100?'Total: 100%'
+      :(optional&&tot===0)?'Total: 0% (any type)'
+      :tot<100?`Error: total is ${tot}%. Add ${100-tot}% to reach 100%.`
+      :`Error: total is ${tot}%. Remove ${tot-100}% to reach 100%.`;
+    return ok;
+  };
+  const a=set($('rTotal'),r,false),b=set($('tTotal'),t,true);
+  return a&&b;
+}
+
+// ---- Rolling
+function weighted(w){
+  const tot=sum(w);let x=Math.random()*tot;
+  for(const k of Object.keys(w)){if(w[k]>0){if(x<w[k])return k;x-=w[k]}}
+  return Object.keys(w).find(k=>w[k]>0);
+}
+function pickItem(type,rar,used){
+  const f={tier:$('fTier').value,use:$('fUse').value,dmg:$('fDmg').value};
+  const pool=DB.filter(r=>(!type||norm(r.equiptype)===norm(type))&&(!f.tier||String(r.tier)===f.tier)&&(!f.use||r.use===f.use)&&(!f.dmg||r.dmgType===f.dmg));
+  const order=[weighted(rar),...RAR.filter(k=>rar[k]>0).sort(()=>Math.random()-.5)];
+  for(const k of order){
+    const c=pool.filter(r=>norm(r.rarity)===norm(k));
+    const fresh=c.filter(r=>!used.has(r));
+    const list=fresh.length?fresh:c;
+    if(list.length){const it=list[rnd(list.length)];used.add(it);return it}
+  }
+  return null;
+}
+function roll(){
+  $('msg').innerHTML='';
+  if(!calc()){$('msg').innerHTML='<div class="err">Fix the percentages before rolling. Rarity and equipment type (unless all 0%) must each total 100%.</div>';return}
+  if(!DB.length){$('msg').innerHTML='<div class="err">The database is empty. Import a CSV first.</div>';return}
+  const p=PRESETS[$('preset').value];
+  let total,dice=[];
+  if(p){total=p.min+rnd(p.max-p.min+1);$('dice').innerHTML='';$('rollInfo').textContent=`${$('preset').value}: ${total} items (range ${p.min} to ${p.max}).`}
+  else{
+    const n=Math.max(1,Math.min(20,Math.floor(+$('nDice').value)||1));$('nDice').value=n;
+    dice=Array.from({length:n},()=>1+rnd(12));total=sum(dice);
+    $('dice').innerHTML=dice.map(d=>`<span class="die">${d}</span>`).join('');
+    $('rollInfo').textContent=`${n}d12 = ${dice.join(' + ')} = ${total} total.`;
+  }
+  const rar=pct('r_',RAR),typ=pct('t_',TYPES);
+  const groups=sum(typ)?TYPES.filter(t=>typ[t]>0).map(t=>({t,x:total*typ[t]/100})):[{t:null,x:total}];
+  const used=new Set(),out=[];let missed=0;
+  groups.forEach(g=>{
+    const n=Math.ceil(g.x-1e-9);
+    for(let i=0;i<n;i++){
+      const it=pickItem(g.t,rar,used);
+      if(!it){missed++;continue}
+      out.push({it,opt:n>g.x+1e-9&&i===n-1});
+    }
+  });
+  render(out,missed);
+}
+function render(out,missed){
+  if(!out.length){$('results').innerHTML='<div class="empty">No items match these filters. Loosen a filter or import more items.</div>';return}
+  const note=missed?`<div class="err">${missed} item${missed>1?'s':''} could not be found for the current filters.</div>`:'';
+  $('results').innerHTML=note+out.map(({it,opt})=>{
+    const w=norm(it.equiptype)==='weapon',a=norm(it.equiptype)==='armor';
+    const stats=[];
+    if(w){if(it.trait)stats.push('Trait: '+it.trait);if(it.range)stats.push('Range: '+it.range);
+      if(it.damage)stats.push('Damage: '+it.damage+(it.damageMod||'')+(it.dmgType?' '+it.dmgType:''));
+      if(it.burden)stats.push('Burden: '+it.burden)}
+    if(a){if(it.baseMajor)stats.push('Major: '+it.baseMajor);if(it.baseSevere)stats.push('Severe: '+it.baseSevere);if(it.baseScore)stats.push('Armor score: '+it.baseScore)}
+    if(it.use&&!w)stats.push('Use: '+it.use);
+    return `<article class="item ${esc(it.rarity)}${opt?' optional':''}">
+      <h3>${opt?'<span class="tag opt">Optional:</span> ':''}${esc(it.title)}</h3>
+      <div class="tags"><span class="tag">${esc(it.rarity)}</span><span class="tag">${esc(it.equiptype)}</span>${it.tier?`<span class="tag">Tier ${esc(it.tier)}</span>`:''}${w&&it.use?`<span class="tag">${esc(it.use)}</span>`:''}</div>
+      ${stats.length?`<div class="stats">${stats.map(esc).join(' | ')}</div>`:''}
+      ${it.feature?`<p class="feature"><strong>Feature:</strong> ${esc(it.feature)}</p>`:''}
+      ${it.description?`<p class="stats" style="font-style:italic">${esc(it.description)}</p>`:''}
+    </article>`}).join('');
+}
+
+// ---- CSV
+function parseCSV(text){
+  const rows=[];let row=[],cur='',q=false;
+  text=text.replace(/^\uFEFF/,'');
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){if(c=='"'){if(text[i+1]=='"'){cur+='"';i++}else q=false}else cur+=c}
+    else if(c=='"')q=true;
+    else if(c==','){row.push(cur);cur=''}
+    else if(c=='\n'||c=='\r'){if(c=='\r'&&text[i+1]=='\n')i++;row.push(cur);cur='';if(row.some(x=>x.trim()))rows.push(row);row=[]}
+    else cur+=c;
+  }
+  row.push(cur);if(row.some(x=>x.trim()))rows.push(row);
+  return rows;
+}
+function importCSV(text){
+  const rows=parseCSV(text);
+  if(rows.length<2){$('msg').innerHTML='<div class="err">That CSV has no data rows.</div>';return}
+  const head=rows[0].map(h=>h.trim().toLowerCase());
+  const col=Object.fromEntries(FIELDS.map(f=>[f,head.indexOf(f.toLowerCase())]));
+  if(col.title<0||col.rarity<0||col.equiptype<0){$('msg').innerHTML='<div class="err">Missing required columns. The CSV needs at least title, equiptype and rarity. Download the template to see all fields.</div>';return}
+  DB=rows.slice(1).map((r,i)=>{
+    const o={};FIELDS.forEach(f=>o[f]=col[f]>=0?(r[col[f]]||'').trim():'');
+    if(!o.index)o.index=i+1;return o;
+  }).filter(o=>o.title);
+  save('ldl_db',DB);refreshDB();
+  $('msg').innerHTML=`<div class="total good">Imported ${DB.length} items.</div>`;
+}
+$('importBtn').onclick=()=>$('file').click();
+$('file').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const rd=new FileReader();rd.onload=()=>importCSV(String(rd.result));rd.readAsText(f);e.target.value='';
+};
+$('tplBtn').onclick=()=>{
+  const csv=FIELDS.join(',')+'\n1,1,Example Sword,Weapon,Primary,Physical,Agility,Melee,d8,+1,One-Handed,,,,"Feature text, with commas in quotes",Short description,Common\n';
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='daggerheart-loot-template.csv';a.click();
+};
+$('rollBtn').onclick=roll;
+refreshDB();presetHint();calc();
+</script>
+</body>
+</html>
