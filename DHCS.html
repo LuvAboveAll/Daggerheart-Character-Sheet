@@ -3103,6 +3103,41 @@ function confirmLevelUp(){const selected=[...document.querySelectorAll('.lvl-adv
  * ========================================================================== */
 function newInvPicker30(){return{query:'',filters:{},searching:false,filtersOpen:false}}
 
+function findItem30(title) {
+  if (!title) return null;
+
+  return ITEMS_DATABASE.find(
+    item => String(item.title || '').toLowerCase() ===
+            String(title).toLowerCase()
+  ) || null;
+}
+
+function invDetails30(item) {
+  if (!item) {
+    return '<div class="inv-empty">No item selected.</div>';
+  }
+
+  const rarity = String(item.rarity || 'Common');
+  const type = String(item.equipType || 'Item');
+  const feature = String(item.feature || '-');
+
+  return `
+    <div class="inv-meta">
+      <span class="inv-chip">
+        <b>Type:</b> ${esc26(type)}
+      </span>
+
+      <span class="inv-chip inv-r-${esc26(rarity)}">
+        <b>Rarity:</b> ${esc26(rarity)}
+      </span>
+    </div>
+
+    <div class="inv-desc">
+      ${esc26(feature)}
+    </div>
+  `;
+}
+	
 function normalizeInventory30() {
   if (!Array.isArray(inventorySlots)) inventorySlots = [];
 
@@ -3312,10 +3347,18 @@ window.saveCustomItem=function(){
     rarity:document.getElementById('custom-item-rarity').value,
     feature:document.getElementById('custom-item-feature').value.trim()||'-'
   });
-  if(old){
-    ITEMS_DATABASE[idx]=item;
-    if(old.title!==title)inventorySlots.forEach(s=>{if(s.mode==='item'&&s.title===old.title)s.title=title});
-  }else ITEMS_DATABASE.push(item);
+ if (old) {
+  ITEMS_DATABASE[idx] = item;
+
+  if (old.title !== title) {
+    inventorySlots.forEach(slot => {
+      if (slot.title === old.title) {
+        slot.title = title;
+      }
+    });
+  }
+} else {
+  ITEMS_DATABASE.push(item);
   closeModal('item-modal');
   renderInventorySlots();
 };
