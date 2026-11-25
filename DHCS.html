@@ -346,7 +346,7 @@
       <button style="width: auto; padding: 4px 12px;" onclick="toggleMenu(event)">⚙️ Menu ▼</button>
       <div class="menu-content" id="sheet-menu" onclick="event.stopPropagation()">
 <details class="menu-submenu" open><summary>Sheet Actions</summary><div class="menu-submenu-content">
-<button onclick="openAddWeaponModal()">+ Create Equipment</button><button onclick="addEquipmentSlot()">+ Equipment Slot</button><button onclick="openAddDomainModal()">+ Create Domain Card</button><button onclick="addDomainSlot()">+ Domain Slot</button><button onclick="addExperienceSlot()">+ Experience</button><button onclick="openAddItemModal()">+ Create Item</button><button onclick="addInventorySlot()">+ Inventory</button><button onclick="addInventoryTextSlot()">+ Free Text Inventory</button><button onclick="openNotesModal()">📝 Notes</button><button type="button" onclick="openLevelUpModal()">🥇 Level Up</button><button onclick="openRestModal('short')">⛺ Short Rest</button><button onclick="openRestModal('long')">🏕️ Long Rest</button></div></details>
+<button onclick="openAddWeaponModal()">+ Create Equipment</button><button onclick="addEquipmentSlot()">+ Equipment Slot</button><button onclick="openAddDomainModal()">+ Create Domain Card</button><button onclick="addDomainSlot()">+ Domain Slot</button><button onclick="addExperienceSlot()">+ Experience</button><button onclick="openAddItemModal()">+ Create Item</button><button onclick="addInventorySlot()">+ Inventory</button><button onclick="openNotesModal()">📝 Notes</button><button type="button" onclick="openLevelUpModal()">🥇 Level Up</button><button onclick="openRestModal('short')">⛺ Short Rest</button><button onclick="openRestModal('long')">🏕️ Long Rest</button></div></details>
 <details class="menu-submenu"><summary>Campaign Frame</summary><div class="menu-submenu-content"><label class="switch-wrap"><input type="checkbox" id="toggle-motherboard" onchange="toggleMotherboardMode(this.checked)"><span class="toggle-slider">Motherboard</span></label></div></details>
 <details class="menu-submenu"><summary>Theme Options</summary><div class="menu-submenu-content"><label>CSS Layout Style</label><select id="layout-select" onchange="changeLayout(this.value)"><option value="overwatch">Overwatch (Standard Grid)</option><option value="focus" selected>Focus (Collapsible Sections)</option></select><label>Theme Preset</label><select id="theme-preset-select" onchange="applyThemePreset(this.value)"><option value="classic">Classic (Black on White)</option><option value="dark-slate">Dark Slate</option><option value="solid-dark">Solid Dark</option><option value="high-contrast">High Contrast</option><option value="forest-gradient">Forest Gradient</option><option value="arcane-gradient" selected>Arcane Gradient</option></select><label>Font Style</label><select id="theme-font-select" onchange="applyFontFamily(this.value)"><option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI</option><option value="'Roboto', sans-serif">Roboto</option><option value="'Open Sans', sans-serif" selected>Open Sans</option><option value="Georgia, serif">Georgia</option><option value="'Courier New', monospace">Courier New</option><option value="'Trebuchet MS', sans-serif">Trebuchet MS</option></select><label>Logo Option</label><select id="logo-theme-select" onchange="toggleLogoTheme(this.value)"><option value="full">Full Color Logo</option><option value="white" selected>White Logo</option></select><label>Background Image</label><input type="file" id="bg-file" accept="image/*" onchange="uploadBG(event)"><div class="grid-2"><div><label>Background</label><input type="color" id="clr-bg" value="#2a1b3d" onchange="updateTheme()"></div><div><label>Text</label><input type="color" id="clr-text" value="#f3e8ff" onchange="updateTheme()"></div><div><label>Cards</label><input type="color" id="clr-card" value="#442b63" onchange="updateTheme()"></div><div><label>Inputs</label><input type="color" id="clr-input" value="#1d122b" onchange="updateTheme()"></div></div></div></details>
 <details class="menu-submenu"><summary>Admin</summary><div class="menu-submenu-content"><button onclick="saveSheetJSON()">💾 Save Sheet (.json)</button><button onclick="document.getElementById('file-load-json').click()">📂 Load Sheet (.json)</button><input type="file" id="file-load-json" accept=".json" style="display:none;" onchange="loadSheetJSON(event)"><button type="button" onclick="document.getElementById('file-class-csv').click()">📥 Load Class Template</button><input type="file" id="file-class-csv" accept=".csv,text/csv" style="display:none" onchange="loadDBCSV(event,'class')"><a class="template-download-link" href="https://github.com/LuvAboveAll/Daggerheart-Character-Sheet/blob/main/DHCSclassTemplate.csv" target="_blank" rel="noopener noreferrer">⬇️ Download Class Template Template</a><button type="button" onclick="document.getElementById('file-ancestry-csv').click()">📥 Load Ancestry</button><input type="file" id="file-ancestry-csv" accept=".csv,text/csv" style="display:none" onchange="loadDBCSV(event,'ancestry')"><a class="template-download-link" href="https://github.com/LuvAboveAll/Daggerheart-Character-Sheet/blob/main/DHCSancestryTemplate.csv" target="_blank" rel="noopener noreferrer">⬇️ Download Ancestry Template</a><button type="button" onclick="document.getElementById('file-community-csv').click()">📥 Load Community</button><input type="file" id="file-community-csv" accept=".csv,text/csv" style="display:none" onchange="loadDBCSV(event,'community')"><a class="template-download-link" href="https://github.com/LuvAboveAll/Daggerheart-Character-Sheet/blob/main/DHCScommunityTemplate.csv" target="_blank" rel="noopener noreferrer">⬇️ Download Community Template</a><button type="button" onclick="document.getElementById('file-transformation-csv').click()">📥 Load Transformation</button><input type="file" id="file-transformation-csv" accept=".csv,text/csv" style="display:none" onchange="loadDBCSV(event,'transformation')"><a class="template-download-link" href="https://github.com/LuvAboveAll/Daggerheart-Character-Sheet/blob/main/DHCStransformationTemplate.csv" target="_blank" rel="noopener noreferrer">⬇️ Download Transformation Template</a><button onclick="document.getElementById('file-load-equipment-csv').click()">📥 Load Equipment CSV</button><input type="file" id="file-load-equipment-csv" accept=".csv,text/csv" style="display:none;" onchange="loadEquipmentCSV(event)"><button onclick="downloadEquipmentTemplate()">⬇️ Download Equipment Template</button><button onclick="document.getElementById('file-load-items-csv').click()">📥 Load Items CSV</button><input type="file" id="file-load-items-csv" accept=".csv,text/csv" style="display:none;" onchange="loadItemsCSV(event)"><button onclick="downloadItemsTemplate()">⬇️ Download Items Template</button><button onclick="document.getElementById('file-load-domain-csv').click()">📥 Load Domain Cards CSV</button><input type="file" id="file-load-domain-csv" accept=".csv,text/csv" style="display:none" onchange="loadDomainCardsCSV(event)"><button onclick="downloadDomainCardTemplate()">⬇️ Download Domain Card Template</button><button onclick="resetSheet()" style="background:#e53e3e;">🔄 Reset Sheet</button><button type="button" onclick="window.location.href='https://www.paypal.com/donate/?business=DNYBEGA5R7CZS&no_recurring=0&currency_code=USD';"style="background:#8DAD11;">Donate</button></div></details>
@@ -1852,7 +1852,7 @@ let experienceSlots = [
   { text: "Street Smarts", value: 2 }
 ];
 let inventorySlots = [
-  { text: "Healing Potion", value: 1 }
+  { text: "Minor Health Potion", value: 1 }
 ];
 let domainCardStates = {}; 
 let activeDomainCards = ["Whirlwind Strike", "Inspiring Song"];
@@ -3079,7 +3079,6 @@ function confirmLevelUp(){const selected=[...document.querySelectorAll('.lvl-adv
 <style>
 /* v1.0.30 inventory backed by ITEMS_DATABASE */
 .inv-top{gap:6px}
-.inv-top .inv-mode{width:auto;font-size:.72rem;padding:3px 4px}
 .inv-top .inv-spacer{flex:1}
 .inv-qty{display:flex;align-items:center;gap:4px;font-size:.72rem}
 .inv-qty input{width:58px;text-align:center;padding:3px}
@@ -3106,33 +3105,23 @@ function newInvPicker30(){return{query:'',filters:{},searching:false,filtersOpen
 
 function normalizeInventory30(){
   if(!Array.isArray(inventorySlots))inventorySlots=[];
-  inventorySlots.forEach((slot,i)=>{
-    if(!slot||typeof slot!=='object'){inventorySlots[i]=slot={text:String(slot??'')}}
-    if(slot.mode!=='item'&&slot.mode!=='text')slot.mode='text'; /* legacy {text,value} rows stay free text */
-    if(typeof slot.text!=='string')slot.text=String(slot.text??'');
+  /* Migrate old free-text rows into the items database; drop empty ones */
+  inventorySlots=inventorySlots.map(s=>(s&&typeof s==='object')?s:{text:String(s??'')}).filter(slot=>{
+    if(slot.title)return true;
+    const name=String(slot.text||'').trim();
+    if(!name)return false;
+    let it=ITEMS_DATABASE.find(x=>String(x.title).toLowerCase()===name.toLowerCase());
+    if(!it){it=Object.assign(blankItem30(),{title:name,feature:String(slot.note||'').trim()||'-'});ITEMS_DATABASE.push(it)}
+    slot.title=it.title;return true;
+  });
+  inventorySlots.forEach(slot=>{
+    delete slot.mode;delete slot.text;
     if(typeof slot.title!=='string')slot.title=String(slot.title??'');
     if(typeof slot.note!=='string')slot.note=String(slot.note??'');
     const q=Number(slot.value);slot.value=Number.isFinite(q)&&q>=0?Math.floor(q):1;
     if(!slot.picker||typeof slot.picker!=='object')slot.picker=newInvPicker30();
-    slot.picker.searching=false; /* never reopen a results list on re-render / load */
+    slot.picker.searching=false;
   });
-}
-
-function findItem30(title){return ITEMS_DATABASE.find(x=>x.title===title)||null}
-
-function invDetails30(it){
-  if(!it)return '<div class="inv-empty">Search above to pick an item from the database.</div>';
-  const chips=[['Type',it.equipType||'Item']];
-  if(it.rarity)chips.push(['Rarity',it.rarity,'inv-r-'+it.rarity]);
-  /* Loot / Consumables have none of these, but custom or imported rows might. */
-  if(Number(it.tier)>0)chips.push(['Tier',it.tier]);
-  [['use','Use'],['dmgType','Dmg Type'],['trait','Trait'],['range','Range'],['burden','Burden']].forEach(([k,l])=>{if(it[k])chips.push([l,it[k]])});
-  if(it.damage){const m=Number(it.damageMod)||0;chips.push(['Damage',it.damage+(m?(m>0?'+':'')+m:'')])}
-  if(Number(it.baseScore))chips.push(['Base Score',it.baseScore]);
-  if(Number(it.baseMajor))chips.push(['Base Major',it.baseMajor]);
-  if(Number(it.baseSevere))chips.push(['Base Severe',it.baseSevere]);
-  return '<div class="inv-meta">'+chips.map(([l,v,c])=>`<span class="inv-chip ${c?esc26(c):''}"><b>${esc26(l)}:</b> ${esc26(v)}</span>`).join('')+'</div>'
-    +`<div class="inv-desc">${esc26(it.feature||'-')}</div>`;
 }
 
 window.renderInventorySlots=function(){
@@ -3142,15 +3131,7 @@ window.renderInventorySlots=function(){
   inventorySlots.forEach((slot,i)=>{
     const card=document.createElement('div');card.className='item-card inv-card';
 
-    /* ---- top row: mode, qty, edit, remove ---- */
     const top=document.createElement('div');top.className='slot-actions inv-top';
-
-    const mode=document.createElement('select');mode.className='inv-mode';mode.setAttribute('aria-label','Inventory entry type');
-    mode.innerHTML='<option value="item">Database item</option><option value="text">Free text</option>';
-    mode.value=slot.mode;
-    mode.addEventListener('change',()=>{slot.mode=mode.value;renderInventorySlots()});
-    top.appendChild(mode);
-
     const spacer=document.createElement('span');spacer.className='inv-spacer';top.appendChild(spacer);
 
     const qtyWrap=document.createElement('label');qtyWrap.className='inv-qty';
@@ -3160,18 +3141,14 @@ window.renderInventorySlots=function(){
     qty.addEventListener('change',()=>{slot.value=Math.max(0,parseInt(qty.value)||0);qty.value=slot.value});
     qtyWrap.appendChild(qty);top.appendChild(qtyWrap);
 
-    const body=document.createElement('div');body.className='inv-body';
-
-    if(slot.mode==='item'){
-      const edit=document.createElement('button');edit.type='button';edit.textContent='Edit';
-      edit.style.cssText='width:auto;padding:2px 6px;background:#3182ce';
-      edit.onclick=()=>{
-        const idx=ITEMS_DATABASE.findIndex(x=>x.title===slot.title);
-        if(idx<0){alert('Pick an item first, then you can edit it.');return}
-        openEditItemModal30(idx);
-      };
-      top.appendChild(edit);
-    }
+    const edit=document.createElement('button');edit.type='button';edit.textContent='Edit';
+    edit.style.cssText='width:auto;padding:2px 6px;background:#3182ce';
+    edit.onclick=()=>{
+      const idx=ITEMS_DATABASE.findIndex(x=>x.title===slot.title);
+      if(idx<0){alert('Pick an item first, then you can edit it.');return}
+      openEditItemModal30(idx);
+    };
+    top.appendChild(edit);
 
     const remove=document.createElement('button');remove.type='button';remove.textContent='X';
     remove.style.cssText='width:auto;padding:2px 6px;background:#e53e3e';
@@ -3179,39 +3156,25 @@ window.renderInventorySlots=function(){
     remove.onclick=()=>{inventorySlots.splice(i,1);renderInventorySlots()};
     top.appendChild(remove);
 
-    /* ---- body ---- */
-    if(slot.mode==='item'){
-      const details=document.createElement('div');
-      details.innerHTML=invDetails30(findItem30(slot.title));
-      const picker=buildPicker26('inventory',i,ITEMS_DATABASE,slot.title,title=>{
-        slot.title=title;
-        details.innerHTML=invDetails30(findItem30(title));
-      });
-      const note=document.createElement('input');note.type='text';note.value=slot.note;
-      note.placeholder='Notes (optional): where it came from, charges left, who carries it...';
-      note.addEventListener('input',()=>{slot.note=note.value});
-      body.append(picker,details,note);
-    }else{
-      const text=document.createElement('input');text.type='text';text.value=slot.text;
-      text.placeholder='Item description...';
-      text.addEventListener('input',()=>{slot.text=text.value});
-      body.appendChild(text);
-    }
+    const body=document.createElement('div');body.className='inv-body';
+    const details=document.createElement('div');
+    details.innerHTML=invDetails30(findItem30(slot.title));
+    const picker=buildPicker26('inventory',i,ITEMS_DATABASE,slot.title,title=>{
+      slot.title=title;
+      details.innerHTML=invDetails30(findItem30(title));
+    });
+    const note=document.createElement('input');note.type='text';note.value=slot.note;
+    note.placeholder='Notes (optional): where it came from, charges left, who carries it...';
+    note.addEventListener('input',()=>{slot.note=note.value});
+    body.append(picker,details,note);
 
     card.append(top,body);box.appendChild(card);
   });
 };
 
-function revealInventory30(){
-  const card=document.getElementById('inventory-slots-list')?.closest('.block-card');
-  if(card)card.classList.remove('collapsed');
-}
 window.addInventorySlot=function(){
-  inventorySlots.push({mode:'item',title:'',text:'',note:'',value:1,picker:newInvPicker30()});
-  renderInventorySlots();revealInventory30();
-};
-window.addInventoryTextSlot=function(){
-  inventorySlots.push({mode:'text',title:'',text:'',note:'',value:1,picker:newInvPicker30()});
+  /* Same pattern as addEquipmentSlot: new slot starts on the first database entry */
+  inventorySlots.push({title:ITEMS_DATABASE[0]?.title||'',note:'',value:1,picker:newInvPicker30()});
   renderInventorySlots();revealInventory30();
 };
 
