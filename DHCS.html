@@ -3103,79 +3103,177 @@ function confirmLevelUp(){const selected=[...document.querySelectorAll('.lvl-adv
  * ========================================================================== */
 function newInvPicker30(){return{query:'',filters:{},searching:false,filtersOpen:false}}
 
-function normalizeInventory30(){
-  if(!Array.isArray(inventorySlots))inventorySlots=[];
+function normalizeInventory30() {
+  if (!Array.isArray(inventorySlots)) inventorySlots = [];
+
   /* Migrate old free-text rows into the items database; drop empty ones */
-  inventorySlots=inventorySlots.map(s=>(s&&typeof s==='object')?s:{text:String(s??'')}).filter(slot=>{
-    if(slot.title)return true;
-    const name=String(slot.text||'').trim();
-    if(!name)return false;
-    let it=ITEMS_DATABASE.find(x=>String(x.title).toLowerCase()===name.toLowerCase());
-    if(!it){it=Object.assign(blankItem30(),{title:name,feature:String(slot.note||'').trim()||'-'});ITEMS_DATABASE.push(it)}
-    slot.title=it.title;return true;
-  });
-  inventorySlots.forEach(slot=>{
-    delete slot.mode;delete slot.text;
-    if(typeof slot.title!=='string')slot.title=String(slot.title??'');
-    if(typeof slot.note!=='string')slot.note=String(slot.note??'');
-    const q=Number(slot.value);slot.value=Number.isFinite(q)&&q>=0?Math.floor(q):1;
-    if(!slot.picker||typeof slot.picker!=='object')slot.picker=newInvPicker30();
-    slot.picker.searching=false;
+  inventorySlots = inventorySlots
+    .map(s => (s && typeof s === 'object') ? s : { text: String(s ?? '') })
+    .filter(slot => {
+      if (slot.title) return true;
+
+      const name = String(slot.text || '').trim();
+      if (!name) return false;
+
+      let it = ITEMS_DATABASE.find(
+        x => String(x.title).toLowerCase() === name.toLowerCase()
+      );
+
+      if (!it) {
+        it = Object.assign(blankItem30(), {
+          title: name,
+          feature: String(slot.note || '').trim() || '-'
+        });
+        ITEMS_DATABASE.push(it);
+      }
+
+      slot.title = it.title;
+      return true;
+    });
+
+  inventorySlots.forEach(slot => {
+    delete slot.mode;
+    delete slot.text;
+
+    if (typeof slot.title !== 'string') {
+      slot.title = String(slot.title ?? '');
+    }
+
+    if (typeof slot.note !== 'string') {
+      slot.note = String(slot.note ?? '');
+    }
+
+    const q = Number(slot.value);
+    slot.value = Number.isFinite(q) && q >= 0 ? Math.floor(q) : 1;
+
+    if (!slot.picker || typeof slot.picker !== 'object') {
+      slot.picker = newInvPicker30();
+    }
+
+    slot.picker.searching = false;
   });
 }
 
-window.renderInventorySlots=function(){
-  const box=document.getElementById('inventory-slots-list');if(!box)return;
+
+window.renderInventorySlots = function() {
+  const box = document.getElementById('inventory-slots-list');
+  if (!box) return;
+
   normalizeInventory30();
-  box.innerHTML='';
-  inventorySlots.forEach((slot,i)=>{
-    const card=document.createElement('div');card.className='item-card inv-card';
 
-    const top=document.createElement('div');top.className='slot-actions inv-top';
-    const spacer=document.createElement('span');spacer.className='inv-spacer';top.appendChild(spacer);
+  box.innerHTML = '';
 
-    const qtyWrap=document.createElement('label');qtyWrap.className='inv-qty';
+  inventorySlots.forEach((slot, i) => {
+    const card = document.createElement('div');
+    card.className = 'item-card inv-card';
+
+    const top = document.createElement('div');
+    top.className = 'slot-actions inv-top';
+
+    const spacer = document.createElement('span');
+    spacer.className = 'inv-spacer';
+    top.appendChild(spacer);
+
+    const qtyWrap = document.createElement('label');
+    qtyWrap.className = 'inv-qty';
     qtyWrap.appendChild(document.createTextNode('Qty'));
-    const qty=document.createElement('input');qty.type='number';qty.min='0';qty.step='1';qty.inputMode='numeric';qty.value=slot.value;
-    qty.addEventListener('input',()=>{slot.value=Math.max(0,parseInt(qty.value)||0)});
-    qty.addEventListener('change',()=>{slot.value=Math.max(0,parseInt(qty.value)||0);qty.value=slot.value});
-    qtyWrap.appendChild(qty);top.appendChild(qtyWrap);
 
-    const edit=document.createElement('button');edit.type='button';edit.textContent='Edit';
-    edit.style.cssText='width:auto;padding:2px 6px;background:#3182ce';
-    edit.onclick=()=>{
-      const idx=ITEMS_DATABASE.findIndex(x=>x.title===slot.title);
-      if(idx<0){alert('Pick an item first, then you can edit it.');return}
+    const qty = document.createElement('input');
+    qty.type = 'number';
+    qty.min = '0';
+    qty.step = '1';
+    qty.inputMode = 'numeric';
+    qty.value = slot.value;
+
+    qty.addEventListener('input', () => {
+      slot.value = Math.max(0, parseInt(qty.value, 10) || 0);
+    });
+
+    qty.addEventListener('change', () => {
+      slot.value = Math.max(0, parseInt(qty.value, 10) || 0);
+      qty.value = slot.value;
+    });
+
+    qtyWrap.appendChild(qty);
+    top.appendChild(qtyWrap);
+
+    const edit = document.createElement('button');
+    edit.type = 'button';
+    edit.textContent = 'Edit';
+    edit.style.cssText = 'width:auto;padding:2px 6px;background:#3182ce';
+
+    edit.onclick = () => {
+      const idx = ITEMS_DATABASE.findIndex(x => x.title === slot.title);
+
+      if (idx < 0) {
+        alert('Pick an item first, then you can edit it.');
+        return;
+      }
+
       openEditItemModal30(idx);
     };
+
     top.appendChild(edit);
 
-    const remove=document.createElement('button');remove.type='button';remove.textContent='X';
-    remove.style.cssText='width:auto;padding:2px 6px;background:#e53e3e';
-    remove.setAttribute('aria-label','Remove inventory entry');
-    remove.onclick=()=>{inventorySlots.splice(i,1);renderInventorySlots()};
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.textContent = 'X';
+    remove.style.cssText = 'width:auto;padding:2px 6px;background:#e53e3e';
+    remove.setAttribute('aria-label', 'Remove inventory entry');
+
+    remove.onclick = () => {
+      inventorySlots.splice(i, 1);
+      renderInventorySlots();
+    };
+
     top.appendChild(remove);
 
-    const body=document.createElement('div');body.className='inv-body';
-    const details=document.createElement('div');
-    details.innerHTML=invDetails30(findItem30(slot.title));
-    const picker=buildPicker26('inventory',i,ITEMS_DATABASE,slot.title,title=>{
-      slot.title=title;
-      details.innerHTML=invDetails30(findItem30(title));
-    });
-    const note=document.createElement('input');note.type='text';note.value=slot.note;
-    note.placeholder='Notes (optional): where it came from, charges left, who carries it...';
-    note.addEventListener('input',()=>{slot.note=note.value});
-    body.append(picker,details,note);
+    const body = document.createElement('div');
+    body.className = 'inv-body';
 
-    card.append(top,body);box.appendChild(card);
+    const details = document.createElement('div');
+    details.innerHTML = invDetails30(findItem30(slot.title));
+
+    const picker = buildPicker26(
+      'inventory',
+      i,
+      ITEMS_DATABASE,
+      slot.title,
+      title => {
+        slot.title = title;
+        details.innerHTML = invDetails30(findItem30(title));
+      }
+    );
+
+    const note = document.createElement('input');
+    note.type = 'text';
+    note.value = slot.note;
+    note.placeholder =
+      'Notes (optional): where it came from, charges left, who carries it...';
+
+    note.addEventListener('input', () => {
+      slot.note = note.value;
+    });
+
+    body.append(picker, details, note);
+
+    card.append(top, body);
+    box.appendChild(card);
   });
 };
 
-window.addInventorySlot=function(){
+
+window.addInventorySlot = function() {
   /* Same pattern as addEquipmentSlot: new slot starts on the first database entry */
-  inventorySlots.push({title:ITEMS_DATABASE[0]?.title||'',note:'',value:1,picker:newInvPicker30()});
-  renderInventorySlots();revealInventory30();
+  inventorySlots.push({
+    title: ITEMS_DATABASE[0]?.title || '',
+    note: '',
+    value: 1,
+    picker: newInvPicker30()
+  });
+
+  renderInventorySlots();
+  revealInventory30();
 };
 
 /* ---------------- Create / Edit item modal ---------------- */
